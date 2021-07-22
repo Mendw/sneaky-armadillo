@@ -7,10 +7,6 @@ export default function Layout({ children }) {
 
     return (
         <>
-            <Head>
-                <link rel="preconnect" href="https://fonts.gstatic.com" />
-                <link href="https://fonts.googleapis.com/css2?family=Jost:wght@600&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet" /> 
-            </Head>
             <div className={styles.nonFooter_wrapper}>
                 <header className={styles.header}>
                     <div className={styles.header_wrapper}>
