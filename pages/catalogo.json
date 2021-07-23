@@ -1,51 +1,66 @@
 {
     "groups":[
     {
-      "param": "o",
+      "id": "sort",
       "title": "Ordenar",
+      "default": "chrono",
       "options": [
+        {
+          "label": "Agregados",
+          "value": "chrono",
+          "function": ["", "return false"]
+        },
         {
           "label": "A - Z",
           "value": "a-z",
-          "param": null
+          "function": ["first", "second", "return first.name.toLowerCase() < second.name.toLowerCase()"]
         },
         {
           "label": "Z - A",
-          "value": "z-a"
+          "value": "z-a",
+          "function": ["first", "second", "return first.name.toLowerCase() > second.name.toLowerCase()"]
         },
         {
           "label": "Más caros",
-          "value": "pra"
+          "value": "price-ascending",
+          "function": ["first", "second", "return first.price < second.price"]
         },
         {
           "label": "Menos caros",
-          "value": "prd"
+          "value": "price-descending",
+          "function": ["first", "second", "return first.price > second.price"]
         }
       ]
     },
     {
-      "param": "c",
+      "id": "filter",
       "title": "Categorías",
+      "default": "all",
       "options": [
         {
           "label": "Todas",
-          "value": null
+          "value": "all",
+          "function": ["return true"]
         },
         {
           "label": "Mangas",
-          "value": "mga"
+          "value": "manga",
+          "function": ["product", "return product.category.toLowerCase()===\"manga\""]
         },
         {
           "label": "Ropa",
-          "value": "clt"
+          "value": "clothing",
+          "function": ["product", "return product.category.toLowerCase()===\"clothing\""]
         },
         {
           "label": "Accesorios",
-          "value": "acc"
+          "value": "accesories",
+          "function": ["product", "return product.category.toLowerCase()===\"accesorios\""]
         },
         {
           "label": "Otros",
-          "value": "oth"
+          "value": "other",
+          "function": ["product", "return product.category.toLowerCase()===\"other\""]
         }
       ]
     }

@@ -11,20 +11,15 @@ function FilterSection (props) {
         <div className={styles.filters_section}>
             <div className={styles.filters_section_title}>
                 <h2>{props.title}</h2>
-                <button 
-                    onClick={() => props.resetFilter()}
-                    className={styles.filter_reset}>
-                    R 
-                </button>
             </div>
             <div className={styles.filter_group}>
                 {props.options.map((option, index) => {
-                    let param = option.hasOwnProperty('param') ? option.param : option.value
-                    let active = param === props.current;
+                    let value = option.value
+                    let active = value === props.current.value;
                     return <div 
                         className={`${styles.filter_option} ${active ? styles.active: ''}`} 
                         key={index} 
-                        onClick={() => props.onClick(param)}>
+                        onClick={() => props.onClick(value)}>
                         {option.label}
                     </div>
                 })}
@@ -53,12 +48,10 @@ function Filters (props) {
             <div className={styles.filters}>
                 {props.groups.map((filter_group, index) => {
                     return <FilterSection
-                        param={filter_group.param}
                         title={filter_group.title}
-                        current={props.current[filter_group.param]}
+                        current={props.current[filter_group.id]}
                         options={filter_group.options}
-                        onClick={(value) => props.setFilterValue(filter_group.param, value)}
-                        resetFilter={() => props.resetFilter(filter_group.param)}
+                        onClick={(value) => props.setFilterValue(filter_group.id, value)}
                         key={index}
                     />  
                 })}
@@ -69,6 +62,13 @@ function Filters (props) {
 
 function Products (props) {
     let products = Config.mockProducts;
+
+    if(props.search !== '') {
+        console.log(props.search)
+        products = products.filter((product) => product.name.toLowerCase().includes(props.search.toLowerCase()))
+    }
+    products = products.filter(props.filters['filter'].function)
+    products.sort(props.filters['sort'].function)
 
     return (
         <div className={styles.products_wrapper}>
@@ -105,23 +105,30 @@ function Products (props) {
 export default class Catalogue extends React.Component {
     constructor(props) {
         super(props)
-        this.groups = Config.groups;
 
-        this.defaults = {}
-        this.searchTimeout = null;
+        this.groups = Config.groups
+        this.searchTimeout = null
 
-        this.searchValue = ''
-
-        this.state = {
+        this.state = { 
+            search: '',
             filterState: false,
             filters: {}
         }
 
+        this.filterFunctions = {}
+
         for(let group of this.groups) {
-            this.state.filters[group.param] = null
+            this.filterFunctions[group.id] = {}
             for(let option of group.options) {
-                if(option.value === null || (option.hasOwnProperty('param') && option.param === null))
-                    this.defaults[group.param] = option.value
+                let func = new Function(...option.function)
+                this.filterFunctions[group.id][option.value] = func
+
+                if(option.value == group.default) {
+                    this.state.filters[group.id] = {
+                        value: group.default,
+                        function: func
+                    }
+                }
             }
         }
     }
@@ -138,28 +145,10 @@ export default class Catalogue extends React.Component {
     }
 
     setSearchValue(value) {
-        this.searchValue = value
-        /* Fetch the results **/
-    }
-
-    setFilterValue(param, value) {
-        if(this.state.filters[param] !== value) {
-            let stateChange = {
-                filters: {...this.state.filters}
-            }
-
-            stateChange.filters[param] = value;
-            this.setState(stateChange);
-        }
-    }
-
-    resetFilter(param) {
-        let stateChange = {
-            filters: {...this.state.filters}
-        }
-
-        stateChange.filters[param] = null
-        this.setState(stateChange);
+        /** Do something */
+        this.setState({
+            search: value
+        })
     }
 
     toggleFilters() {
@@ -168,6 +157,20 @@ export default class Catalogue extends React.Component {
         })
     }
 
+
+    setFilterValue(param, value) {
+        if(this.state.filters[param] !== value) {
+            let stateChange = {
+                filters: {...this.state.filters}
+            }
+
+            stateChange.filters[param] = {
+                value: value,
+                function: this.filterFunctions[param][value]
+            };
+            this.setState(stateChange);
+        }
+    }
     render () {
         return (
             <div className={styles.catalogue}>
@@ -178,12 +181,14 @@ export default class Catalogue extends React.Component {
                 <div className={styles.content}>
                     <Filters
                         groups={this.groups}
-                        resetFilter={(param) => this.resetFilter(param)}
                         state={this.state.filterState}
                         setFilterValue={(param, value) => this.setFilterValue(param, value)}
                         current={this.state.filters}
                     />
-                    <Products/>
+                    <Products
+                        search={this.state.search}
+                        filters={this.state.filters}
+                    />
                 </div>
             </div>
         )
