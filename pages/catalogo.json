@@ -13,22 +13,22 @@
         {
           "label": "A - Z",
           "value": "a-z",
-          "function": ["first", "second", "return first.name.toLowerCase() < second.name.toLowerCase()"]
+          "function": ["first", "second", "return first.name.toLowerCase() > second.name.toLowerCase() ? 1 : -1"]
         },
         {
           "label": "Z - A",
           "value": "z-a",
-          "function": ["first", "second", "return first.name.toLowerCase() > second.name.toLowerCase()"]
+          "function": ["first", "second", "return first.name.toLowerCase() < second.name.toLowerCase() ? 1 : -1"]
         },
         {
           "label": "Más caros",
           "value": "price-ascending",
-          "function": ["first", "second", "return first.price < second.price"]
+          "function": ["first", "second", "return first.price < second.price? 1 : -1"]
         },
         {
           "label": "Menos caros",
           "value": "price-descending",
-          "function": ["first", "second", "return first.price > second.price"]
+          "function": ["first", "second", "return first.price > second.price ? 1 : -1"]
         }
       ]
     },
