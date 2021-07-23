@@ -1,11 +1,17 @@
 import '../styles/globals.css'
 import Layout from '../components/layout'
+import Head from 'next/head'
 
 function CustomApp({ Component, pageProps }) {
-  return(
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+  return (
+    <>
+      <Head>
+        <title>Hoshi Mangas</title>
+      </Head>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </>
   )
 }
 
