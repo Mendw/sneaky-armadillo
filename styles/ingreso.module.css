@@ -1,0 +1,75 @@
+.login_wrapper {
+    flex: 1;
+
+    display: grid;
+    place-content: center;
+}
+
+.login {
+    overflow: hidden;
+    border-radius: 10px;
+
+    width: 320px;
+    height: 380px;
+
+    background-color: var(--matte-color-600);
+    display: flex;
+    flex-direction: column;
+}
+
+.login_title {
+    font-size: 2rem;
+    padding: 2rem 0 1.5rem 0;
+
+    font-family: var(--title-font);
+
+    display: grid;
+    place-content: center;
+
+    color: var(--matte-color-100);
+}
+
+.login_option {
+    padding-left: 15px;
+
+    margin: 5px 20px;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+}
+
+.login_option span {
+    margin: 0.3em 0px 0px 15px;
+    font-weight: bold;
+}
+
+.facebook {
+    flex-basis: 60px;
+    background-color: #4267B2;
+
+    color: white;
+}
+
+.google {
+    flex-basis: 60px;
+    background-color: white;
+    color: #707070;
+}
+
+.as_admin {
+    flex: 1;
+
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.as_admin a {
+    color: var(--matte-color-400);
+    text-decoration: none;
+}

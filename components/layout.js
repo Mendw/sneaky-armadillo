@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { NavLink } from './navlink'
+import Link from 'next/link';
 
 import styles from '../styles/layout.module.css'
 
@@ -12,25 +13,31 @@ export default function Layout({ children }) {
                     <div className={styles.header_wrapper}>
                         <div className={styles.header_top}>
                             <div className={styles.header_separator}></div>
-                            <NavLink exact href="/" className={styles.logo}>
-                                <span className={styles.logo_kanji}>星</span>
-                                <span className={styles.logo_text}>HOSHI</span>
-                            </NavLink>
+                            <Link exact href="/">
+                                <a className={styles.logo}>
+                                    <span className={styles.logo_kanji}>星</span>
+                                    <span className={styles.logo_text}>HOSHI</span>
+                                </a>
+                            </Link>
                             <div className={styles.header_topRight}>
-                                <NavLink href="/carrito">
-                                    <div className={styles.cart_container}>
-                                        <div className={styles.cart_handle}></div>
-                                        <div className={styles.cart_box}>
-                                            <div className={styles.cart_divider}></div>
-                                            <div className={styles.cart_ammount}>0</div>
+                                <Link href="/carrito">
+                                    <a>  
+                                        <div className={styles.cart_container}>
+                                            <div className={styles.cart_handle}></div>
+                                            <div className={styles.cart_box}>
+                                                <div className={styles.cart_divider}></div>
+                                                <div className={styles.cart_ammount}>0</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </NavLink>
-                                <NavLink href="/ingreso">
-                                    <div className={styles.login_link}>
-                                        <span className={styles.login_link_letter}>/</span>
-                                    </div>
-                                </NavLink>
+                                    </a>
+                                </Link>
+                                <Link href="/ingreso">
+                                    <a>
+                                        <div className={styles.login_link}>
+                                            <span className={styles.login_link_letter}>/</span>
+                                        </div>
+                                    </a>
+                                </Link>
                             </div>
                         </div>
                         <div className={styles.header_bottom}>

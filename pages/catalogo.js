@@ -1,6 +1,9 @@
 import React from 'react'
 import styles from '../styles/catalogo.module.css'
 import Image from 'next/image'
+import useSWR from 'swr'
+import Head from 'next/head'
+import Spinner from '../components/spinner'
 
 import burgerIcon from '../public/img/catalogo/hamburger.webp'
 
@@ -61,42 +64,53 @@ function Filters (props) {
 }
 
 function Products (props) {
-    let products = Config.mockProducts;
+    let { data, error } = useSWR('/api/products')
 
-    if(props.search !== '') {
-        console.log(props.search)
-        products = products.filter((product) => product.name.toLowerCase().includes(props.search.toLowerCase()))
+    let _products
+    if(error) {
+        _products = <div className={styles.messageProduct}>Ha ocurrido un error</div>
+    } else if(!data) {
+        _products = <div className={styles.messageProduct}>
+            <span>Cargando productos...</span>
+            <Spinner className={styles.messageProduct_spinner}/>
+        </div> 
+    } else {
+        if(props.search !== '') {
+            data = data.filter((product) => product.name.toLowerCase().includes(props.search.toLowerCase()))
+        }
+        data = data.filter(props.filters['filter'].function)
+        data.sort(props.filters['sort'].function)
+
+        _products = data.map((product, index) => {
+            return (
+                <div className={styles.product} key={index}>
+                    <div className={styles.product_image_wrapper}>
+                        <span className={styles.product_category}>{product.category.toUpperCase()}</span>
+                        <span className={styles.product_price}>${product.price.toLocaleString(
+                            undefined,
+                            { minimumFractionDigits: 2 }
+                            )}</span>
+                        <Image 
+                            src={`/img/catalogo/${product.image}`} 
+                            alt={product.name.toLowerCase()} 
+                            className={styles.product_image}
+                            width={300}
+                            height={360}
+                            />
+                    </div>
+                    <div className={styles.product_description}>
+                        <div className={styles.product_description_separator}></div>
+                        <span className={styles.product_title}>{product.name}</span>
+                    </div>
+                </div>
+            )
+        })
     }
-    products = products.filter(props.filters['filter'].function)
-    products.sort(props.filters['sort'].function)
 
     return (
         <div className={styles.products_wrapper}>
             <div className={styles.products}>
-                {products.map((data, index) => {
-                    return (
-                        <div className={styles.product} key={index}>
-                            <div className={styles.product_image_wrapper}>
-                                <span className={styles.product_category}>{data.category.toUpperCase()}</span>
-                                <span className={styles.product_price}>${data.price.toLocaleString(
-                                    undefined,
-                                    { minimumFractionDigits: 2 }
-                                )}</span>
-                                <Image 
-                                    src={`/img/catalogo/${data.image}`} 
-                                    alt={data.name.toLowerCase()} 
-                                    className={styles.product_image}
-                                    width={300}
-                                    height={360}
-                                />
-                            </div>
-                            <div className={styles.product_description}>
-                                <div className={styles.product_description_separator}></div>
-                                <span className={styles.product_title}>{data.name}</span>
-                            </div>
-                        </div>
-                    )
-                })}
+                {_products}
             </div>
         </div>
     )
@@ -173,24 +187,30 @@ export default class Catalogue extends React.Component {
     }
     render () {
         return (
-            <div className={styles.catalogue}>
-                <Search
-                    handleInput={(param) => this.handleSearch(param)}
-                    toggleFilters={() => this.toggleFilters()}
-                />
-                <div className={styles.content}>
-                    <Filters
-                        groups={this.groups}
-                        state={this.state.filterState}
-                        setFilterValue={(param, value) => this.setFilterValue(param, value)}
-                        current={this.state.filters}
+            <>
+                <Head>
+                    <link rel="preload" href="/api/products" as="fetch" crossOrigin="anonymous" />
+                </Head>
+                <div className={styles.catalogue}>
+                    <Search
+                        handleInput={(param) => this.handleSearch(param)}
+                        toggleFilters={() => this.toggleFilters()}
                     />
-                    <Products
-                        search={this.state.search}
-                        filters={this.state.filters}
-                    />
+                    <div className={styles.content}>
+                        <Filters
+                            groups={this.groups}
+                            state={this.state.filterState}
+                            setFilterValue={(param, value) => this.setFilterValue(param, value)}
+                            current={this.state.filters}
+                        />
+                        <Products
+                            search={this.state.search}
+                            filters={this.state.filters}
+                        />
+                    </div>
                 </div>
-            </div>
+            </>
         )
     }
 }
+  

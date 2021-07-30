@@ -72,7 +72,7 @@
 }
 
 .catalogue {
-    color: var(--matte-color-700);
+    color: var(--matte-color-100);
 
     background-color: var(--primary-color);
     border-color: var(--matte-color-500);
@@ -86,7 +86,7 @@
 }
 
 .contact {
-    padding: 20px 0px;
+    padding: 10px 0px;
     place-self: end center;
 
     display: grid;
@@ -104,12 +104,6 @@
 
     width: 50px;
     height: 50px;
-
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
-}
-
-.whatsapp {
-    background-color: #25d366;
 }
 
 .information {
@@ -138,6 +132,8 @@
 }
 
 .information_content {
+    flex: 1;
+
     display: flex;
     flex-direction: column;
 
@@ -152,6 +148,8 @@
 }
 
 .updates {
+    flex: 1;
+
     display: flex;
     flex-direction: column;
 
@@ -187,7 +185,7 @@
 }
 
 .discounts_content {
-    max-width: 372px;
+    max-width: 438px;
 
     display: flex;
     flex-flow: row wrap;
@@ -197,8 +195,9 @@
 }
 
 .item {
-    width: 100px;
-    height: 100px;
+    border: 1px solid var(--matte-color-600);
+    width: 120px;
+    height: 144px;
 
     margin: 12px;
 
@@ -215,15 +214,17 @@
 .item > span {
     position: absolute;
 
-    bottom: 10px;
+    top: 10px;
     right: -15px;
 
     height: 30px;
-    padding: 0px 10px;
+    padding: 0px 10px 0px 20px;
 
-    background-color: var(--positive-color-d);
-    color: var(--matte-color-dd);
-    border: 1px solid var(--matte-color-dd);
+    background-color: var(--positive-color);
+    color: var(--matte-color-700);
+    border: 1px solid var(--matte-color-600);
+
+    border-radius: 10px 5px 5px 10px;
 
     display: grid;
     place-content: center;
@@ -274,6 +275,9 @@
         right: 0px;
         
         overflow-y: auto;
+        display: flex;
+
+        flex-direction: column;
     }
 
     .greeting_content {
