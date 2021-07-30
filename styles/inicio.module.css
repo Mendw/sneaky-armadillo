@@ -309,6 +309,7 @@
 
     .greeting_content {
         border-radius: 10px;
+        width: 295px;
         padding: 30px 60px 50px 60px;
     }
 }
