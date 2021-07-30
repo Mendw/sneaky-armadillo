@@ -13,17 +13,20 @@ export default function Index (props) {
                     <div className={styles.contact}>
                         <a 
                             href="https://www.instagram.com/hoshimangas.ve/"
-                            target="_blank">
+                            target="_blank"
+                            rel="noreferrer">
                             <Image width={35} height={35} src="/img/inicio/instagram.webp" alt="Instagram Logo"/>
                         </a>
                         <a 
                             href="https://vm.tiktok.com/ZMdW7b4DE/"
-                            target="_blank">
+                            target="_blank"
+                            rel="noreferrer">
                             <Image width={35} height={35} src="/img/inicio/tiktok.webp" alt="TikTok Logo"/>
                         </a>
                         <a 
                             href="https://wa.me/584126952570"
-                            target="_blank">
+                            target="_blank"
+                            rel="noreferrer">
                             <Image width={35} height={35} src="/img/inicio/whatsapp.webp" alt="Whatsapp Logo"/>
                         </a>
                     </div>
