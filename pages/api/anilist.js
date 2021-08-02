@@ -23,8 +23,7 @@ query ($page: Int, $perPage: Int, $search: String) {
 // Define our query variables and values that will be used in the query request
 var variables = {
     page: 1,
-    perPage: 50,
-    search: "Kimetsu"
+    perPage: 50
 };
 
 // Define the config we'll need for our Api request

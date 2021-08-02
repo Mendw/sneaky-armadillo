@@ -1,0 +1,22 @@
+.container {
+    flex: 1;
+
+    display: grid;
+    place-content: center;
+}
+
+.emoji {
+    font-size: 3rem;
+
+    background-color: var(--matte-color-500);
+    border: 5px solid var(--matte-color-700);
+
+    width: 80px;
+    height: 80px;
+
+    border-radius: 50%;
+    place-self: center;
+
+    display: grid;
+    place-content: center;
+}

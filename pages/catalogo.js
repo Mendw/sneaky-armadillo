@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '../styles/catalogo.module.css'
 import Image from 'next/image'
 import useSWR from 'swr'
@@ -116,101 +116,80 @@ function Products (props) {
     )
 }
 
-export default class Catalogue extends React.Component {
-    constructor(props) {
-        super(props)
+export default function Catalogue (props) {
+    let groups = Config.groups
+    let searchTimeout = null
 
-        this.groups = Config.groups
-        this.searchTimeout = null
+    const [search, setSearch] = useState('')
+    const [filterState, setFilterState] = useState(false)
 
-        this.state = { 
-            search: '',
-            filterState: false,
-            filters: {}
-        }
+    let initialFiltersValue = {}
+    let filterFunctions = {}
 
-        this.filterFunctions = {}
+    for(let group of groups) {
+        filterFunctions[group.id] = {}
+        for(let option of group.options) {
+            let func = new Function(...option.function)
+            filterFunctions[group.id][option.value] = func
 
-        for(let group of this.groups) {
-            this.filterFunctions[group.id] = {}
-            for(let option of group.options) {
-                let func = new Function(...option.function)
-                this.filterFunctions[group.id][option.value] = func
-
-                if(option.value == group.default) {
-                    this.state.filters[group.id] = {
-                        value: group.default,
-                        function: func
-                    }
+            if(option.value == group.default) {
+                initialFiltersValue[group.id] = {
+                    value: group.default,
+                    function: func
                 }
             }
         }
     }
 
-    handleSearch(e) {
-        if(this.searchTimeout) {
-            clearTimeout(this.searchTimeout)
+    const [filters, setFilters] = useState(initialFiltersValue)
+
+    function handleSearch(e) {
+        if(searchTimeout) {
+            clearTimeout(searchTimeout)
         }
 
-        this.searchTimeout = setTimeout(() => {
-            this.searchTimeout = null
-            this.setSearchValue(e.target.value)
+        searchTimeout = setTimeout(() => {
+            searchTimeout = null
+            setSearch(e.target.value)
         }, 500)
     }
 
-    setSearchValue(value) {
-        /** Do something */
-        this.setState({
-            search: value
-        })
-    }
 
-    toggleFilters() {
-        this.setState({
-            filterState: !this.state.filterState
-        })
-    }
-
-
-    setFilterValue(param, value) {
-        if(this.state.filters[param] !== value) {
-            let stateChange = {
-                filters: {...this.state.filters}
-            }
-
-            stateChange.filters[param] = {
-                value: value,
-                function: this.filterFunctions[param][value]
-            };
-            this.setState(stateChange);
+    function setFilterValue(param, value) {
+        if(filters[param] !== value) {
+            setFilters({
+                ...filters,
+                [param]: {
+                    value: value,
+                    function: filterFunctions[param][value]
+                }
+            })
         }
     }
-    render () {
-        return (
-            <>
-                <Head>
-                    <link rel="preload" href="/api/products" as="fetch" crossOrigin="anonymous" />
-                </Head>
-                <div className={styles.catalogue}>
-                    <Search
-                        handleInput={(param) => this.handleSearch(param)}
-                        toggleFilters={() => this.toggleFilters()}
+    return (
+        <>
+            <Head>
+                <link rel="preload" href="/api/products" as="fetch" crossOrigin="anonymous" />
+            </Head>
+            <div className={styles.catalogue}>
+                <Search
+                    handleInput={(param) => handleSearch(param)}
+                    toggleFilters={() => setFilterState(!filterState)}
+                />
+                <div className={styles.content}>
+                    <Filters
+                        groups={groups}
+                        state={filterState}
+                        setFilterValue={(param, value) => setFilterValue(param, value)}
+                        current={filters}
                     />
-                    <div className={styles.content}>
-                        <Filters
-                            groups={this.groups}
-                            state={this.state.filterState}
-                            setFilterValue={(param, value) => this.setFilterValue(param, value)}
-                            current={this.state.filters}
-                        />
-                        <Products
-                            search={this.state.search}
-                            filters={this.state.filters}
-                        />
-                    </div>
+                    <Products
+                        search={search}
+                        filters={filters}
+                    />
                 </div>
-            </>
-        )
-    }
+            </div>
+        </>
+    )
 }
   
