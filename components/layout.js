@@ -3,9 +3,10 @@ import { NavLink } from './navlink'
 import Link from 'next/link';
 
 import styles from '../styles/layout.module.css'
+import { SessionContext } from '../lib/session';
+import { useContext } from 'react';
 
 export default function Layout({ children }) {
-
     return (
         <>
             <div className={styles.nonFooter_wrapper}>

@@ -3,9 +3,12 @@ import { basepath } from '../../../../lib/utils'
 
 import { jwtVerify } from 'jose/jwt/verify'
 import { createRemoteJWKSet } from 'jose/jwks/remote'
+import { randomBytes } from 'crypto'
+
+const remoteJWKs = createRemoteJWKSet(new URL('https://www.googleapis.com/oauth2/v3/certs'))
 
 export default withSession(async (req, res) => {    
-    let redirect = basepath
+    res.setHeader("cache-control", "no-store, max-age=0");
 
     if(req.query.state === req.session.get('google-token')) {
         req.session.unset('google-token')
@@ -22,20 +25,32 @@ export default withSession(async (req, res) => {
             })
         }).then(res => res.json())
 
-        const { payload, protectedHeader } = await jwtVerify(
-            response.id_token,
-            createRemoteJWKSet(new URL('https://www.googleapis.com/oauth2/v3/certs')), 
+        const { payload } = await jwtVerify(
+            response.id_token, remoteJWKs, 
             {
                 issuer: ["https://accounts.google.com", "accounts.google.com"],
                 audience: process.env.GOOGLE_CLIENT_ID
             }
         )
 
-        console.log(payload)
-    } else {
-        redirect = `${basepath}?error=token`
+        let token = randomBytes(32).toString('hex')
+        req.session.set('authentication-data', {
+            token: token,
+            client_id: payload.sub,
+            profile: {
+                email: payload.email,
+                email_verified: payload.email_verified,
+                name: payload.name
+            },
+            provider_id: 'google'
+        })
+
+        await req.session.save()
+
+        res.redirect(`${basepath}/autenticar?token=${token}`)
+        return
     }
 
-    res.setHeader("cache-control", "no-store, max-age=0");
-    res.redirect(redirect)
+    //error should be passed
+    res.redirect(basepath)
 })

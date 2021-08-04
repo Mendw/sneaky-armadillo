@@ -1,8 +1,10 @@
 import { withSession } from '../../../../lib/session'
 import { basepath } from '../../../../lib/utils'
+import { randomBytes } from 'crypto'
 
 export default withSession(async (req, res) => {    
-    let redirect = basepath
+    res.setHeader("cache-control", "no-store, max-age=0");
+
     if(req.query.state === req.session.get('facebook-token')) {
         req.session.unset('facebook-token')
         await req.session.save()
@@ -15,11 +17,22 @@ export default withSession(async (req, res) => {
         ].join('&')
 
         let response = await fetch(url).then(res => res.json())
-        let profile = await fetch(`https://graph.facebook.com/me?fields=email,name&access_token=${response.access_token}`).then(res => res.json())
+        let {id, ...profile} = await fetch(`https://graph.facebook.com/me?fields=email,name&access_token=${response.access_token}`).then(res => res.json())
+        let token = randomBytes(32).toString('hex')
 
+        req.session.set('authentication-data', {
+            token: token,
+            client_id: id,
+            profile: profile,
+            provider_id: 'facebook'
+        })
+
+        await req.session.save()
         
+        res.redirect(`${basepath}/autenticar?token=${token}`)
+        return
     }
 
-    res.setHeader("cache-control", "no-store, max-age=0");
-    res.redirect(redirect)
+    //error should be passed
+    res.redirect(basepath)
 })
