@@ -1,6 +1,6 @@
 import { basepath } from '../../../../lib/utils'
 import { withSession } from '../../../../lib/session'
-import  { createHash, randomBytes } from 'crypto'
+import  { randomBytes } from 'crypto'
 
 function buildURL({
     authenticationUrl, 
