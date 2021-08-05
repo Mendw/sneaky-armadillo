@@ -1,5 +1,5 @@
 import { withSession } from "../../lib/session";
-import fauna from '../../lib/fauna'
+import { user_from_client_id, createUser, linkAccount } from '../../lib/fauna'
 
 export default withSession (async function (req, res) {
     let auth_data = req.session.get('authentication-data')
@@ -26,7 +26,7 @@ export default withSession (async function (req, res) {
         })
         return
     }
-    let {data, error} = await fauna.user_from_client_id(provider_id, client_id)
+    let {data, error} = await user_from_client_id(provider_id, client_id)
     if(error) {
         res.json({
             _error: error
@@ -43,8 +43,8 @@ export default withSession (async function (req, res) {
         return
     }
 
-    let user_ref = await fauna.createUser(profile)
-    let account = await fauna.linkAccount(provider_id, client_id, user_ref)
+    let user_ref = await createUser(profile)
+    let account = await linkAccount(provider_id, client_id, user_ref)
     
     res.json(account)
 })
