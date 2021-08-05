@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "faunadb": "^4.3.0",
-    "jose": "^3.14.3",
+    "jose-node-esm-runtime": "^3.14.3",
     "next": "11.0.1",
     "next-iron-session": "^4.2.0",
     "react": "17.0.2",

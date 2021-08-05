@@ -1,8 +1,8 @@
 import { withSession } from '../../../../lib/session'
 import { basepath } from '../../../../lib/utils'
 
-import { jwtVerify } from 'jose/jwt/verify'
-import { createRemoteJWKSet } from 'jose/jwks/remote'
+import { jwtVerify } from 'jose-node-esm-runtime/jwt/verify'
+import { createRemoteJWKSet } from 'jose-node-esm-runtime/jwks/remote'
 import { randomBytes } from 'crypto'
 
 const remoteJWKs = createRemoteJWKSet(new URL('https://www.googleapis.com/oauth2/v3/certs'))
