@@ -108,11 +108,16 @@ function Products (props) {
     }
 
     return (
+    <>
+        <Head>
+            <title>Catálogo | Hoshi</title>
+        </Head>
         <div className={styles.products_wrapper}>
             <div className={styles.products}>
                 {_products}
             </div>
         </div>
+    </>
     )
 }
 

@@ -36,6 +36,11 @@ export default function Login() {
                             </a>
                         </Link>
                     )})}
+                    <div className={styles.as_admin}>
+                        <Link href={'/admin'}>
+                            <a>Ingresar como Admin</a>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </>

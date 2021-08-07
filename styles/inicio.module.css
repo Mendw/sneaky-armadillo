@@ -18,9 +18,9 @@
 
 .greeting_content {
     background-color: var(--matte-color-500);
-
-    padding: 30px 0px 50px 0px;
     border-radius: 0px;
+
+    padding: 30px 0 50px 0px;
 
     display: grid;
     place-content: center;
@@ -33,26 +33,28 @@
 }
 
 .greeting_content > h1 {
-    padding: 25px;
+    padding: 30px 0px 10px;
 
     white-space: nowrap;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'Karla', sans-serif;
+
+    letter-spacing: -1px;
+    text-align: center;
 }
 
 .greeting_content > h1, .greeting_content > span {
     color: var(--matte-color-100);
-    text-align: center;
 }
 
 .greeting_actions {
-    margin-top: 40px;
+    margin-top: 30px;
 
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.aboutUs, .catalogue {
+.catalogue {
     text-decoration: none;
     padding: 12px 15px;
 
@@ -67,7 +69,7 @@
     transition-duration: 50ms;
 }
 
-.aboutUs:active, .catalogue:active {
+.catalogue:active {
     border-style: inset;
 }
 
@@ -78,15 +80,10 @@
     border-color: var(--matte-color-500);
 }
 
-.aboutUs {
-    color: var(--matte-color-600);
-
-    background-color: var(--matte-color-300);
-    border-color: var(--matte-color-500);
-}
-
 .contact {
-    padding: 10px 0px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+
     place-self: end center;
 
     display: grid;
@@ -107,7 +104,7 @@
 }
 
 .information {
-    --information-background: var(--matte-color-200);
+    --information-background: var(--matte-color-100);
     background-color: var(--information-background);
 
     flex: 1;
@@ -123,12 +120,12 @@
 
     pointer-events: none;
     background: transparent;
-    background: linear-gradient(to top, var(--information-background) 0px, transparent 60px);
+    background: linear-gradient(to top, var(--information-background) 0px, transparent 40px);
 
     z-index: 1;
-    margin: 0px 40px;
+    margin: 0px 20px;
 
-    flex: 0 0 60px;
+    flex: 0 0 40px;
 }
 
 .information_content {
@@ -137,11 +134,11 @@
     display: flex;
     flex-direction: column;
 
-    padding: 40px;
+    padding: 20px;
 }
 
 .information_content h1 {
-    color: var(--matte-color-700);
+    color: var(--matte-color-600);
 
     font-family: var(--title-font);
     margin-bottom: 5px;
@@ -161,14 +158,12 @@
 
     line-height: 2;
     padding: 5px 10px;
-
-    color: var(--matte-color-100);
 }
 
 .update span {
-    color: var(--matte-color-100);
+    color: var(--primary-color-dd   );
 
-    background-color: var(--matte-color-400);
+    background-color: var(--primary-color-l);
     padding: .5em 10px;
     
     -webkit-box-decoration-break: clone;
@@ -280,6 +275,10 @@
         flex-direction: column;
     }
 
+    .information {
+        --information-background: var(--primary-color-ll);
+    }
+
     .greeting_content {
         box-shadow: 5px 5px 7px 1px var(--matte-color-300);
     }
@@ -301,24 +300,24 @@
     }
 }
 
-@media only screen and (min-width: 420px) {
+@media only screen and (min-width: 395px) {
     .greeting {
         grid-template-columns: unset;
         padding-bottom: 30px;
     }
 
+    .information_content {
+        padding: 40px;
+    }
+
     .greeting_content {
         border-radius: 10px;
-        width: 295px;
+        width: 250px;
         padding: 30px 60px 50px 60px;
     }
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .aboutUs:hover {
-        background-color: var(--matte-color-200);
-    }
-
     .catalogue:hover {
         background-color: var(--primary-color-l);
     }
