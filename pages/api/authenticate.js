@@ -1,13 +1,12 @@
-import { withSession } from "../../lib/session";
+import { withUserSession } from "../../lib/session";
 import { user_from_client_id, createUser, linkAccount } from '../../lib/fauna'
 
-export default withSession (async function (req, res) {
+export default withUserSession (async function (req, res) {
     let auth_data = req.session.get('authentication-data')
     if(auth_data === undefined) {
-        res.json({
-            _error: 'no auth data'
-        })
-        return
+        res.status(400).json({
+            error: 'Authentication data not found'
+        }); return
     }
 
     let {
@@ -21,30 +20,30 @@ export default withSession (async function (req, res) {
     await req.session.save()
 
     if(token !== req.query.token) {
-        res.json({
-            _error: 'token mismatch'
-        })
-        return
-    }
-    let {data, error} = await user_from_client_id(provider_id, client_id)
-    if(error) {
-        res.json({
-            _error: error
-        })
-        return
-    }
-    
-    if (data) {
-        console.log('found!')
-        console.log(data)
-        res.json({
-            
-        })
-        return
+        res.status(400).json({
+            error: 'Token mismatch'
+        }); return
     }
 
-    let user_ref = await createUser(profile)
-    let account = await linkAccount(provider_id, client_id, user_ref)
+    let {user, error} = await user_from_client_id(provider_id, client_id)
+    if(error) {
+        res.status(400)
+        res.status(400).json({
+            error: error
+        }); return
+    }
     
-    res.json(account)
+    if (!user) {
+        user = await createUser(profile)
+        linkAccount(provider_id, client_id, user.ref.id)
+    }
+
+    req.session.set('user', {
+        user_ref: user.ref.id
+    })
+    await req.session.save()
+    res.status(200).json({
+        isLoggedIn: true,
+        profile: user.data
+    })
 })

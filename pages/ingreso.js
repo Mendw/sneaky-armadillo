@@ -6,8 +6,11 @@ import Link from 'next/link'
 
 import f_logo from '../public/img/ingreso/f_logo.png'
 import g_logo from '../public/img/ingreso/g_logo.png'
+import useUser from '../lib/useUser'
 
 export default function Login() {
+    useUser({ redirectTo: "/perfil", redirectIfFound: true })
+
     const providers = [
         {
             logo: f_logo,

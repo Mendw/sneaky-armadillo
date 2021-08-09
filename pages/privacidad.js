@@ -10,7 +10,7 @@ export default function AboutUs() {
             <div className={styles.privacy_wrapper}>
                 <div className={styles.privacy}>
                     <h2>Política de Privacidad</h2>
-                    <p>Hoshi Mangas, accesible visitando https://www.hoshimangas.com, proporciona esta política de privacidad para describir la manera en que recolecta, usa, comparte y almacena la información personal de los usuarios.</p>
+                    <p>Hoshi Mangas proporciona esta política de privacidad para describir la manera en que recolecta, usa, comparte y almacena la información personal de los usuarios.</p>
                     <p>Esta política de privacidad se aplica únicamente a la información recolectada mediante el uso del sitio web.</p>
                     
                     <h3>Información recolectada y su uso</h3>

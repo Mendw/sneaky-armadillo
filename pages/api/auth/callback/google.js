@@ -1,4 +1,4 @@
-import { withSession } from '../../../../lib/session'
+import { withUserSession } from '../../../../lib/session'
 import { basepath } from '../../../../lib/utils'
 
 import { jwtVerify } from 'jose/jwt/verify'
@@ -7,7 +7,7 @@ import { randomBytes } from 'crypto'
 
 const remoteJWKs = createRemoteJWKSet(new URL('https://www.googleapis.com/oauth2/v3/certs'))
 
-export default withSession(async (req, res) => {    
+export default withUserSession(async (req, res) => {    
     res.setHeader("cache-control", "no-store, max-age=0");
 
     if(req.query.state === req.session.get('google-token')) {

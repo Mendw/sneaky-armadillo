@@ -1,8 +1,8 @@
-import { withSession } from '../../../../lib/session'
+import { withUserSession } from '../../../../lib/session'
 import { basepath } from '../../../../lib/utils'
 import { randomBytes } from 'crypto'
 
-export default withSession(async (req, res) => {    
+export default withUserSession(async (req, res) => {    
     res.setHeader("cache-control", "no-store, max-age=0");
 
     if(req.query.state === req.session.get('facebook-token')) {

@@ -1,5 +1,5 @@
 import { basepath } from '../../../../lib/utils'
-import { withSession } from '../../../../lib/session'
+import { withUserSession } from '../../../../lib/session'
 import  { randomBytes } from 'crypto'
 
 function buildURL({
@@ -33,7 +33,7 @@ export const provider_urls = {
     }
 }
 
-export default withSession(async (req, res) => {
+export default withUserSession(async (req, res) => {
     let {provider} = req.query
 
     if(provider in provider_urls) {

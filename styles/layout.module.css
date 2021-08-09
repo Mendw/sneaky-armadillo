@@ -79,6 +79,7 @@
   
     display: grid;
     grid-auto-flow: column;
+    user-select: none;
   
     justify-content: flex-end;
   
@@ -204,17 +205,24 @@
   
   .footer {
     display: flex;
-  
     flex-direction: row;
     justify-content: center;
+
     background-color: var(--matte-color-600);
-  
-    color: var(--matte-color-l);
-    padding: 20px 0px;
+    padding: 20px 40px;
+  }
+
+  .footer_content {
+    flex: 0 1 var(--app-width);
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: flex-end;
   }
   
   .footer a {
-    color: var(--matte-color-l);
+    color: var(--matte-color-400);
     text-decoration: none;
   }
   

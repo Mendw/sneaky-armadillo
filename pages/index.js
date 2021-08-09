@@ -3,9 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-//TODO: Make responsive, fix spacing 
-
-export default function Index (props) {
+export default function Index (props) {    
     return (
         <React.Fragment>
             <div className={styles.index_wrapper}>
