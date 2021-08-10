@@ -22,7 +22,8 @@ export const provider_urls = {
     facebook: {
         authenticationUrl:'https://www.facebook.com/v11.0/dialog/oauth',
         client_id:process.env.FACEBOOK_CLIENT_ID,
-        callbackEndpoint:`${basepath}/api/auth/callback/facebook`
+        callbackEndpoint:`${basepath}/api/auth/callback/facebook`,
+        scope: 'public_profile email'
     },
     google: {
         authenticationUrl:'https://accounts.google.com/o/oauth2/auth',
