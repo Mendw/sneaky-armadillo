@@ -28,8 +28,10 @@ export default withUserSession(async (req, res) => {
         ].join('&')
 
         let response = await fetch(url).then(res => res.json())
-        let { id } = await fetch(`https://graph.facebook.com/me?fields=email,name&access_token=${response.access_token}`).then(res => res.json())
+        let { id } = await fetch(`https://graph.facebook.com/me?access_token=${response.access_token}`).then(res => res.json())
         let token = randomBytes(16).toString('hex')
+
+        console.log(id)
 
         req.session.set('authentication-data', {
             token: token,

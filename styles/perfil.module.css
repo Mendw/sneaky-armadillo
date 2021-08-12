@@ -1,4 +1,4 @@
-.profile {
+.profile_wrapper {
     flex: 1;
     display: flex;
 
@@ -6,7 +6,7 @@
     justify-content: center;
 }
 
-.profile_content {
+.profile {
     flex: 0 1 var(--app-width);
     display: flex;
     flex-direction: column;
@@ -16,13 +16,18 @@
     padding: 60px 20px;
 }
 
-.profile_content h1 {
+.profile h1 {
     margin-bottom: 20px;
 }
 
-.profile_content h1, .profile_content h2 {
+.profile h1, .profile h2 {
     font-family: var(--title-font);
     font-weight: 400;
+}
+
+.profile_content {
+    display: flex;
+    flex-direction: column;
 }
 
 .providers {

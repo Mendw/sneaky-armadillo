@@ -30,7 +30,7 @@ export default function Profile() {
     if(user && user.profile) { 
         profile_content = <>
             <h1>Hola, {user.profile.name}</h1>
-            <div>
+            <div className={styles.profile_content}>
                 <h2>Métodos de Autenticación</h2>
                 <div className={styles.providers}>
                     {providers.map((provider, index) => {
@@ -72,8 +72,8 @@ export default function Profile() {
     }
 
     return (
-        <div className={styles.profile}>
-            <div className={styles.profile_content}>
+        <div className={styles.profile_wrapper}>
+            <div className={styles.profile}>
                 {profile_content}
             </div>
         </div>

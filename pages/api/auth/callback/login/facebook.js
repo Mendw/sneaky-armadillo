@@ -26,7 +26,6 @@ export default withUserSession(async (req, res) => {
         let token = randomBytes(16).toString('hex')
 
         if(profile) profile['accounts'] = ['facebook']
-
         req.session.set('authentication-data', {
             token: token,
             client_id: id,
