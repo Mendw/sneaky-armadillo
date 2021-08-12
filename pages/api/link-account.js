@@ -1,5 +1,5 @@
 import { withUserSession } from "../../lib/session";
-import { user_from_client_id, createUser, linkAccount } from '../../lib/fauna'
+import { user_from_client_id, updateUser, linkAccount, getUser, unlinkAccount } from '../../lib/fauna'
 
 export default withUserSession (async function (req, res) {
     let auth_data = req.session.get('authentication-data')
@@ -12,7 +12,7 @@ export default withUserSession (async function (req, res) {
     let {
         token,
         client_id,
-        profile,
+        user_ref,
         provider_id
     } = auth_data
 
@@ -27,22 +27,33 @@ export default withUserSession (async function (req, res) {
 
     let {user, error} = await user_from_client_id(provider_id, client_id)
     if(error) {
-        res.status(400).json({
-            error: error
-        }); return
+        if(!error.code || error.code !== 0) {
+            res.status(400).json({
+                error: error.message
+            })
+        }
     }
     
-    if (!user) {
-        user = await createUser(profile)
-        linkAccount(provider_id, client_id, user.ref.id)
+    if (user) {
+        res.status(400).json({
+            error: 'Account already linked to a user'
+        }); return
     }
 
-    req.session.set('user', {
-        user_ref: user.ref.id
-    })
-    await req.session.save()
+    if(error && error.code === 0) {
+        await unlinkAccount(provider_id, client_id)
+    }
+    
+    user = await getUser(user_ref)
+    await linkAccount(provider_id, client_id, user_ref)
+
+    let accounts = user.data.accounts
+    accounts.push(provider_id)
+
     res.status(200).json({
         isLoggedIn: true,
-        profile: user.data
+        profile: await updateUser(user_ref, {
+            data: {accounts}
+        }).then(user => user.data)
     })
 })

@@ -53,36 +53,7 @@ export default function Index (props) {
                                     <span>30/06/21 - Sacamos nueva mercancía! Mentira esto tambien es una prueba.</span>
                                 </div>
                             </div>
-                            {/*
-                            <div className={styles.discounts}>
-                                <h1>Ofertas</h1>
-                                <div className={styles.discounts_content}>
-                                    <div className={styles.item}>
-                                        <Image width={120} height={144} src="/img/catalogo/placeholder.webp" alt="ph"></Image>
-                                        <span>-25%</span>
-                                    </div>
-                                    <div className={styles.item}>
-                                        <Image width={120} height={144} src="/img/catalogo/placeholder.webp" alt="ph"></Image>
-                                        <span>-30%</span>
-                                    </div>
-                                    <div className={styles.item}>
-                                        <Image width={120} height={144} src="/img/catalogo/Tixp3OWR.jpeg" alt="ph"></Image>
-                                        <span>-25%</span>
-                                    </div>
-                                    <div className={styles.item}>
-                                        <Image width={120} height={144} src="/img/catalogo/placeholder.webp" alt="ph"></Image>
-                                        <span>-30%</span>
-                                    </div>
-                                    <div className={styles.item}>
-                                        <Image width={120} height={144} src="/img/catalogo/placeholder.webp" alt="ph"></Image>
-                                        <span>-25%</span>
-                                    </div>
-                                    <div className={styles.item}>
-                                        <Image width={120} height={144} src="/img/catalogo/placeholder.webp" alt="ph"></Image>
-                                        <span>-30%</span>
-                                    </div>
-                                </div>
-                            </div>*/}
+                            <div className={styles.information_separator}></div>
                             <div className={styles.payment_methods}>
                                 <h1>Métodos de Pago</h1>
                                 <div className={styles.payment_methods_content}>

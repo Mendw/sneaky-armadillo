@@ -1,5 +1,5 @@
-import { withUserSession } from '../../../../lib/session'
-import { basepath } from '../../../../lib/utils'
+import { withUserSession } from '../../../../../lib/session';
+import { basepath } from '../../../../../lib/utils'
 
 import { jwtVerify } from 'jose/jwt/verify'
 import { createRemoteJWKSet } from 'jose/jwks/remote'
@@ -7,10 +7,21 @@ import { randomBytes } from 'crypto'
 
 const remoteJWKs = createRemoteJWKSet(new URL('https://www.googleapis.com/oauth2/v3/certs'))
 
-export default withUserSession(async (req, res) => {    
-    res.setHeader("cache-control", "no-store, max-age=0");
-
-    if(req.query.state === req.session.get('google-token')) {
+export default withUserSession(async (req, res) => {
+    let google_state = req.session.get('google-state')
+    let user = req.session.get('user')
+    let query_state = req.query.state
+    if(
+        query_state && 
+        google_state && 
+        'token' in google_state &&
+        query_state === google_state.token &&
+        
+        user &&
+        'user_ref' in user &&
+        'user_ref' in google_state &&
+        user.user_ref === google_state.user_ref
+    ) {
         req.session.unset('google-token')
         await req.session.save()
 
@@ -20,7 +31,7 @@ export default withUserSession(async (req, res) => {
                 code: req.query.code,
                 client_id: process.env.GOOGLE_CLIENT_ID,
                 client_secret: process.env.GOOGLE_CLIENT_SECRET,
-                redirect_uri: `${basepath}/api/auth/callback/google`,
+                redirect_uri: `${basepath}/api/auth/callback/link/google`,
                 grant_type: 'authorization_code'
             })
         }).then(res => res.json())
@@ -33,24 +44,19 @@ export default withUserSession(async (req, res) => {
             }
         )
 
-        let token = randomBytes(32).toString('hex')
+        let token = randomBytes(16).toString('hex')
         req.session.set('authentication-data', {
             token: token,
             client_id: payload.sub,
-            profile: {
-                email: payload.email,
-                email_verified: payload.email_verified,
-                name: payload.name
-            },
+            user_ref: google_state.user_ref,
             provider_id: 'google'
         })
 
         await req.session.save()
 
-        res.redirect(`${basepath}/autenticar?token=${token}`)
+        res.redirect(`${basepath}/enlazar?token=${token}`)
         return
     }
 
-    //error should be passed
-    res.redirect(basepath)
+    res.redirect(`${basepath}?error=state-mismatch`)
 })

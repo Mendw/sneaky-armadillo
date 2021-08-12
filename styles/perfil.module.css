@@ -8,5 +8,91 @@
 
 .profile_content {
     flex: 0 1 var(--app-width);
-    
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    padding: 60px 20px;
+}
+
+.profile_content h1 {
+    margin-bottom: 20px;
+}
+
+.profile_content h1, .profile_content h2 {
+    font-family: var(--title-font);
+    font-weight: 400;
+}
+
+.providers {
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    row-gap: 5px;
+
+    margin-bottom: 20px;
+}
+
+.provider_container {
+    grid-column-end: span 2;
+
+    display: grid;
+    grid-template-columns: subgrid;
+
+}
+
+.provider {
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.provider span {
+    margin: 0.1em 0px 0px 15px;
+    font-weight: bold;
+}
+
+.facebook {
+    background-color: #4267B2;
+    color: white;
+}
+
+.google {
+    background-color: white;
+    color: #707070;
+}
+
+.connect_button {
+    border-radius: 0px;
+
+    padding: 0px 10px 0px 15px;
+    font-weight: bold;
+
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.connect_button.connected {
+    background-color: var(--danger-color-d);
+    border-color: var(--danger-color-d);
+
+    color: var(--matte-color-100);
+}
+
+.connect_button.not_connected {
+    background-color: var(--positive-color-d);
+    border-color: var(--positive-color-d);
+}
+
+.connect_button:disabled {
+    background-color: var(--matte-color-300);
+    border-color: var(--matte-color-300);
+}
+
+.logout {
+    padding: 20px;
 }

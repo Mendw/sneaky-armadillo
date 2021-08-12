@@ -26,7 +26,7 @@ export default function Authenticate() {
             }
         }
 
-        fetchOnce(`${basepath}/api/authenticate?token=${router.query?.token??''}`)
+        fetchOnce(`${basepath}/api/link-account?token=${router.query?.token??''}`)
         if(data) {mutate('/api/user', data).then(() => {router.push(basepath)})}
     }, [data, router, requestSent])
     
