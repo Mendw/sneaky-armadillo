@@ -8,10 +8,16 @@ import { useRouter } from 'next/router';
 import { basepath } from '../lib/utils';
 import { useState } from 'react';
 
+import Spinner from '../components/spinner';
+
 function ProfileLoading() {
     return (
         <>
-
+            <h1>Hola, Usuario</h1>
+            <div className={styles.profile_content}>
+                <h2>Cargando su perfil</h2>
+                <Spinner className={styles.spinner}/>
+            </div>
         </>
     )
 }
@@ -48,7 +54,7 @@ export default function Profile() {
                         }];
                         return <div className={styles.provider_container} key={index}>
                             <div className={[styles.provider, styles[provider.name]].join(' ')}>
-                                <Image src={provider.logo} width={50} height={50} className={styles.login_option_logo} alt={provider.name}/>
+                                <Image src={provider.logo} width={30} height={30} className={styles.login_option_logo} alt={provider.name}/>
                                 <span>{capitalizeString(provider.name)}</span>
                             </div>
                             <button disabled={!canClick || (user.profile.accounts.length < 2 && provider_connected)} className={[styles.connect_button, styles[class_]].join(' ')} onClick={async () => {
