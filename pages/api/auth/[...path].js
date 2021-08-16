@@ -1,10 +1,10 @@
 import { basepath } from '../../../lib/utils'
 import { withUserSession } from '../../../lib/session'
-import  { randomBytes } from 'crypto'
+import { randomBytes } from 'crypto'
 import adapter from '../../../lib/fauna'
 
 function buildURL({
-    authenticationUrl, 
+    authenticationUrl,
     client_id,
     action,
     provider,
@@ -22,34 +22,34 @@ function buildURL({
 
 export const provider_urls = {
     facebook: {
-        authenticationUrl:'https://www.facebook.com/v11.0/dialog/oauth',
-        client_id:process.env.FACEBOOK_CLIENT_ID,
+        authenticationUrl: 'https://www.facebook.com/v11.0/dialog/oauth',
+        client_id: process.env.FACEBOOK_CLIENT_ID,
         scope: 'public_profile email'
     },
     google: {
-        authenticationUrl:'https://accounts.google.com/o/oauth2/auth',
-        client_id:process.env.GOOGLE_CLIENT_ID,
+        authenticationUrl: 'https://accounts.google.com/o/oauth2/auth',
+        client_id: process.env.GOOGLE_CLIENT_ID,
         scope: 'openid profile email',
     }
 }
 
 export default withUserSession(async (req, res) => {
     const { path } = req.query
-    if(path.length !== 2) {
+    if (path.length !== 2) {
         res.redirect(`${basepath}?error=path`)
         return
     }
 
-    const [ action, provider ] = path
-    if(!(['login', 'link', 'unlink'].includes(action))) {
+    const [action, provider] = path
+    if (!(['login', 'link', 'unlink'].includes(action))) {
         res.redirect(`${basepath}?error=action`)
         return
     }
 
     let user_ref
-    if(['link', 'unlink'].includes(action)) {
+    if (['link', 'unlink'].includes(action)) {
         let user = req.session.get('user')
-        if(!(user && user.user_ref)) {
+        if (!(user && user.user_ref)) {
             res.redirect(`${basepath}?error=user_ref`)
             return
         }
@@ -57,21 +57,21 @@ export default withUserSession(async (req, res) => {
         user_ref = user.user_ref
     }
 
-    if(provider in provider_urls) {
-        if(action === 'unlink') {
+    if (provider in provider_urls) {
+        if (action === 'unlink') {
             let user = await adapter.getUser(user_ref)
             let accounts = user.data.accounts
-            if(accounts.length < 2) {
+            if (accounts.length < 2) {
                 res.status(400).json({
                     error: "Can't unlink when theres only one account"
                 }); return
             }
 
             let { error } = await adapter.unlinkAccount(provider, user_ref)
-            if(error) {
+            if (error) {
                 res.status(400).json(error)
                 return
-            }            
+            }
 
             accounts = accounts.filter((value) => {
                 return value !== provider
@@ -80,7 +80,7 @@ export default withUserSession(async (req, res) => {
             res.json({
                 isLoggedIn: true,
                 profile: await adapter.updateUser(user_ref, {
-                    data: {accounts}
+                    data: { accounts }
                 }).then(user => user.data)
             }); return
         }
@@ -91,13 +91,17 @@ export default withUserSession(async (req, res) => {
             user_ref
         })
         await req.session.save()
-        res.redirect(buildURL({
-            ...provider_urls[provider], 
-            state: token,
-            action,
-            provider
-        }))
+        res.json({
+            redirectURL: buildURL({
+                ...provider_urls[provider],
+                state: token,
+                action,
+                provider
+            })
+        })
     } else {
-        res.redirect(`${basepath}?error=provider`)
+        res.json({
+            error: '(api/auth/[...path]) Provider not recognized'
+        })
     }
 })

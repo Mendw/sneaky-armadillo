@@ -17,7 +17,7 @@
 }
 
 .profile h1, .profile h2 {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-family: var(--title-font);
     font-weight: 400;
 }
@@ -27,34 +27,60 @@
     flex-direction: column;
 }
 
+.account_activity {
+    width: 285px;
+    height: 300px;
+
+    border: 1px solid var(--matte-color-200);
+    margin-bottom: 15px;
+
+    display: grid;
+    place-content: center;
+}
+
+.no_activity {
+    color: var(--matte-color-400);
+}
+
 .providers {
+    margin-bottom: 10px;
+
     display: flex;
     flex-direction: column;
 
-    margin-bottom: 10px;
-}
-
-.provider_container {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 5px;
 }
 
 .provider {
+    display: flex;
+    flex-direction: row;
+
+    height: 50px;
+}
+
+.provider_logo_wrapper {
     flex: 1;
 
-    padding: 10px 15px;
     display: flex;
     flex-direction: row;
 
     align-items: center;
+    padding: 10px;
+
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    font-weight: bold;
 }
 
-.provider span {
-    margin: 0.1em 0px 0px 15px;
-    font-weight: bold;
+.provider_logo {
+    width: 30px;
+    height: 30px;
 
-    font-size: 1.05rem;
+    margin-right: 20px;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
 }
 
 .facebook {
@@ -64,17 +90,33 @@
 
 .google {
     background-color: white;
-    color: #707070;
+    color: var(--matte-color-400);
+}
+
+.provider_name {
+    flex: 1;
+
+    display: grid;
+    align-content: center;
+
+    padding-left: 10px;
+}
+
+.provider_action {
+    flex-basis: 105px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .connect_button {
-    border-radius: 0px;
+    border-radius: 5px;
 
-    padding: 0px 10px 0px 15px;
-    font-weight: bold;
-    font-size: .9rem;
+    padding: 2px 0px;
+    margin: 0px 5px;
 
-    margin-left: 3px;
+    cursor: pointer;
 }
 
 .connect_button.connected {
@@ -95,7 +137,14 @@
 }
 
 .logout {
-    padding: 20px;
+    padding: 15px;
+    cursor: pointer;
+
+    background-color: var(--matte-color-200);
+    color: var(--matte-color-500);
+
+    border: none;
+    border-radius: 5px;
 }
 
 .spinner {

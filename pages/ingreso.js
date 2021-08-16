@@ -6,9 +6,11 @@ import Link from 'next/link'
 import useUser from '../lib/useUser'
 
 import providers from '../lib/providers';
+import { useRouter } from 'next/router'
 
 export default function Login() {
     useUser({ redirectTo: "/perfil", redirectIfFound: true })
+    let router = useRouter()
 
     return (
         <>
@@ -19,10 +21,16 @@ export default function Login() {
                 <div className={styles.login}>
                     <h2 className={styles.login_title}>Ingreso</h2> { 
                     providers.map((provider, index) => { return (
-                        <a className={[styles.login_option, styles[provider.name]].join(' ')} href={`/api/auth/login/${provider.name}`} key={index}>
-                            <Image src={provider.logo} width={40} height={40} className={styles.login_option_logo} alt={provider.name}/>
+                        <button className={[styles.login_option, styles[provider.name]].join(' ')} key={index} onClick={async () => {
+                            let {error, redirectURL} = await fetch(`/api/auth/login/${provider.name}`).then(res => res.json())
+                            if(error) console.error(error)
+                            else {
+                                router.push(redirectURL)
+                            }
+                        }}>
+                            <Image src={provider.logo} width={30} height={30} className={styles.login_option_logo} alt={provider.name}/>
                             <span>{provider.loginText}</span>
-                        </a>
+                        </button>
                     )})}
                     <div className={styles.as_admin}>
                         <Link href={'/admin'}>

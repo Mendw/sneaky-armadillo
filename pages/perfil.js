@@ -37,11 +37,15 @@ export default function Profile() {
         profile_content = <>
             <h1>Hola, {user.profile.name}</h1>
             <div className={styles.profile_content}>
+                <h2>Actividad Reciente</h2>
+                <div className={styles.account_activity}>
+                    <div className={styles.no_activity}>No parece haber nada aquí</div>
+                </div>
                 <h2>Métodos de Autenticación</h2>
                 <div className={styles.providers}>
                     {providers.map((provider, index) => {
                         let provider_connected = user.profile.accounts.includes(provider.name);
-                        let [class_, text, func] = provider_connected ? ['connected', 'Desconectar', async () => {
+                        let [class_, text, func] = provider_connected ? [styles.connected, 'Desconectar', async () => {
                             if(user.profile.accounts.length > 1) {
                                 let {error, ...user} = await fetch(`${basepath}/api/auth/unlink/${provider.name}`).then(res => res.json())
                                 if(error) console.error(error) 
@@ -49,18 +53,28 @@ export default function Profile() {
                                     mutateUser(user).then(setCanClick(true))
                                 }
                             }
-                        }] : ['not_connected', `Conectar`, async () => {
-                            router.push(`${basepath}/api/auth/link/${provider.name}`)
+                        }] : [styles.not_connected, `Conectar`, async () => {
+                            let {error, redirectURL} = await fetch(`${basepath}/api/auth/link/${provider.name}`).then(res => res.json())
+                            if(error) console.error(error)
+                            else {
+                                router.push(redirectURL)
+                            }
                         }];
-                        return <div className={styles.provider_container} key={index}>
-                            <div className={[styles.provider, styles[provider.name]].join(' ')}>
-                                <Image src={provider.logo} width={30} height={30} className={styles.login_option_logo} alt={provider.name}/>
-                                <span>{capitalizeString(provider.name)}</span>
+                        return <div className={[styles.provider, styles[provider.name]].join(' ')} key={index}>
+                            <div className={styles.provider_logo_wrapper}>
+                                <div className={styles.provider_logo}>
+                                    <Image src={provider.logo} height={30} width={30}></Image>
+                                </div>
+                                {capitalizeString(provider.name)}
                             </div>
-                            <button disabled={!canClick || (user.profile.accounts.length < 2 && provider_connected)} className={[styles.connect_button, styles[class_]].join(' ')} onClick={async () => {
-                                setCanClick(false)
-                                func()
-                            }}>{text}</button>
+                            <div className={styles.provider_action}>
+                                <button className={[class_, styles.connect_button].join(' ')} onClick={() => {
+                                    setCanClick(false)
+                                    func()
+                                }}>
+                                    {text}
+                                </button>
+                            </div>
                         </div>
                     })}
                 </div>
@@ -70,7 +84,7 @@ export default function Profile() {
             <button disabled={!canClick} className={styles.logout} onClick={async () => {
                 setCanClick(false)
                 mutateUser(await fetch('/api/logout', {method: 'POST'}))}}>
-                Salir de su cuenta
+                Cerrar Sesión
             </button>
         </>
     } else {
