@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import styles from '../styles/catalogo.module.css'
+import styles from '../../styles/catalogo.module.css'
 import Image from 'next/image'
 import useSWR from 'swr'
 import Head from 'next/head'
-import Spinner from '../components/spinner'
+import Spinner from '../../components/spinner'
+import Link from 'next/link'
 
-import burgerIcon from '../public/img/catalogo/hamburger.webp'
+import burgerIcon from '../../public/img/catalogo/hamburger.webp'
 
 const Config = require('./catalogo.json')
 
@@ -63,14 +64,62 @@ function Filters (props) {
     )
 }
 
+function Product (props) {
+    let [isLoading, setIsLoading] = useState(true)
+
+    let imageWrapperClasses = [
+        styles.product_image_wrapper
+    ]
+
+    if(isLoading) {
+        imageWrapperClasses.push(
+            styles.product_image_loading
+        )
+    }
+
+    let name = props.data.name
+    if(props.data.volume) {
+        name += ` Vol. ${props.data.volume}`
+    }
+
+    let id = `${props.data.series}-${`${props.data.volume}`.padStart(3, '0')}${props.data.language}`
+    return (
+        <Link className={styles.product} href={`/catalogo/${id}`}>
+            <a><div className={imageWrapperClasses.join(' ')}>
+                <Image
+                    src={`/img/catalogo/${props.data.image}`} 
+                    alt={name}
+
+                    layout="fill"
+                    objectFit="cover"
+                    objectPosition="center"
+
+                    onLoadingComplete={() => {
+                        setIsLoading(false)
+                    }}
+                />
+            </div>
+            <div className={styles.product_description}>
+                <span className={styles.product_title}>{name}</span>
+                <span className={styles.product_category}>{props.data.category.toUpperCase()}</span>
+                <span className={styles.product_price}>{`$${props.data.price.toLocaleString(
+                    undefined,
+                    { minimumFractionDigits: 2 }
+                    )}`}</span>
+            </div></a>
+        </Link>
+    )
+}
+
 function Products (props) {
     let { data, error } = useSWR('/api/products')
 
-    let _products
+    let products_content
     if(error) {
-        _products = <div className={styles.messageProduct}>Ha ocurrido un error</div>
-    } else if(!data) {
-        _products = <div className={styles.messageProduct}>
+        products_content = <div className={styles.messageProduct}>Ha ocurrido un error</div>
+    } 
+    else if(!data) {
+        products_content = <div className={styles.messageProduct}>
             <span>Cargando productos...</span>
             <Spinner className={styles.messageProduct_spinner}/>
         </div> 
@@ -81,29 +130,8 @@ function Products (props) {
         data = data.filter(props.filters['filter'].function)
         data.sort(props.filters['sort'].function)
 
-        _products = data.map((product, index) => {
-            return (
-                <div className={styles.product} key={index}>
-                    <div className={styles.product_image_wrapper}>
-                        <span className={styles.product_category}>{product.category.toUpperCase()}</span>
-                        <span className={styles.product_price}>${product.price.toLocaleString(
-                            undefined,
-                            { minimumFractionDigits: 2 }
-                            )}</span>
-                        <Image 
-                            src={`/img/catalogo/${product.image}`} 
-                            alt={product.name.toLowerCase()} 
-                            className={styles.product_image}
-                            width={300}
-                            height={360}
-                            />
-                    </div>
-                    <div className={styles.product_description}>
-                        <div className={styles.product_description_separator}></div>
-                        <span className={styles.product_title}>{product.name}</span>
-                    </div>
-                </div>
-            )
+        products_content = data.map((product, index) => {
+            return <Product data={product} key={index} />
         })
     }
 
@@ -114,7 +142,7 @@ function Products (props) {
         </Head>
         <div className={styles.products_wrapper}>
             <div className={styles.products}>
-                {_products}
+                {products_content}
             </div>
         </div>
     </>

@@ -23,7 +23,7 @@ export default function Layout({ children }) {
                     <div className={styles.header_wrapper}>
                         <div className={styles.header_top}>
                             <div className={styles.header_separator}></div>
-                            <Link exact href="/">
+                            <Link href="/">
                                 <a className={styles.logo}>
                                     <span className={styles.logo_kanji}>星</span>
                                     <span className={styles.logo_text}>HOSHI</span>

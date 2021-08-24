@@ -10,7 +10,7 @@ NavLink.propTypes = {
 };
 
 NavLink.defaultProps = {
-    exact: false
+    exact: true
 };
 
 function NavLink({ href, exact, children, activeClassName, ...props }) {

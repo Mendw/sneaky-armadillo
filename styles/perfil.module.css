@@ -42,12 +42,17 @@
     color: var(--matte-color-400);
 }
 
-.providers {
-    margin-bottom: 10px;
+.authMethods {
+    margin-bottom: 20px;
+}
 
+.authMethods > summary {
+    font-size: 1.4rem;
+}
+
+.providers {
     display: flex;
     flex-direction: column;
-
 }
 
 .provider {
@@ -140,8 +145,8 @@
     padding: 15px;
     cursor: pointer;
 
-    background-color: var(--matte-color-200);
-    color: var(--matte-color-500);
+    background-color: var(--matte-color-500);
+    color: var(--matte-color-200);
 
     border: none;
     border-radius: 5px;

@@ -5,40 +5,58 @@ getRange()
 export default function handler(req, res) {
   res.status(200).json([
     {
-      "name": "Ataque a los Titanes Vol. 1",
+      "series": "AOT",
+      "volume": 1,
+      "language": "ES",
+      "name": "Ataque a los Titanes",
       "image": "xitK8lYd.jpeg",
       "price": 20.0,
       "category": "Manga"
     },
     {
-      "name": "Jujutsu Kaisen Vol. 1",
+      "series": "JJK",
+      "volume": 1,
+      "language": "ES",
+      "name": "Jujutsu Kaisen",
       "image": "Tixp3OWR.jpeg",
       "price": 20.0,
       "category": "Accesorios"
     },
     {
-      "name": "Guardianes de la Noche Vol. 1",
+      "series": "KNY",
+      "volume": 1,
+      "language": "ES",
+      "name": "Guardianes de la Noche",
       "image": "Ht3Y7YTh.jpeg",
       "price": 20.99,
       "category": "Manga"
     },
     {
-      "name": "Ataque a los Titanes Vol. 1",
+      "series": "JJK",
+      "volume": 1,
+      "language": "ES",
+      "name": "Jujutsu Kaisen",
+      "image": "Tixp3OWR.jpeg",
+      "price": 20.0,
+      "category": "Accesorios"
+    },
+    {
+      "series": "AOT",
+      "volume": 1,
+      "language": "ES",
+      "name": "Ataque a los Titanes",
       "image": "xitK8lYd.jpeg",
       "price": 20.0,
       "category": "Manga"
     },
     {
-      "name": "Jujutsu Kaisen Vol. 1",
-      "image": "Tixp3OWR.jpeg",
-      "price": 20.0,
+      "series": "KNY",
+      "volume": 1,
+      "language": "ES",
+      "name": "Guardianes de la Noche",
+      "image": "Ht3Y7YTh.jpeg",
+      "price": 20.99,
       "category": "Manga"
     },
-    {
-      "name": "Guardianes de la Noche Vol. 1",
-      "image": "Ht3Y7YTh.jpeg",
-      "price": 20.0,
-      "category": "Manga"
-    }
   ])
 }

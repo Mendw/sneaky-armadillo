@@ -41,9 +41,9 @@ export default function Profile() {
                 <div className={styles.account_activity}>
                     <div className={styles.no_activity}>No parece haber nada aquí</div>
                 </div>
-                <h2>Métodos de Autenticación</h2>
-                <div className={styles.providers}>
-                    {providers.map((provider, index) => {
+                <details className={styles.authMethods}>
+                    <summary>Métodos de Autenticación</summary>
+                    <div className={styles.providers}> {providers.map((provider, index) => {
                         let provider_connected = user.profile.accounts.includes(provider.name);
                         let [class_, text, func] = provider_connected ? [styles.connected, 'Desconectar', async () => {
                             if(user.profile.accounts.length > 1) {
@@ -63,7 +63,7 @@ export default function Profile() {
                         return <div className={[styles.provider, styles[provider.name]].join(' ')} key={index}>
                             <div className={styles.provider_logo_wrapper}>
                                 <div className={styles.provider_logo}>
-                                    <Image src={provider.logo} height={30} width={30}></Image>
+                                    <Image src={provider.logo} height={30} width={30} alt=""></Image>
                                 </div>
                                 {capitalizeString(provider.name)}
                             </div>
@@ -78,8 +78,8 @@ export default function Profile() {
                         </div>
                     })}
                 </div>
+                </details>
             </div>  
-
                     
             <button disabled={!canClick} className={styles.logout} onClick={async () => {
                 setCanClick(false)
