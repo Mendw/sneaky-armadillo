@@ -193,6 +193,7 @@
     overflow: hidden;
 
     border-bottom: none;
+    text-decoration: none;
 }
 
 .messageProduct {
@@ -282,4 +283,10 @@
 
     display: grid;
     place-content: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .product:hover .product_image_wrapper {
+        opacity: 90%;
+    }
 }

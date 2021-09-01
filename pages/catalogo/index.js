@@ -8,7 +8,74 @@ import Link from 'next/link'
 
 import burgerIcon from '../../public/img/catalogo/hamburger.webp'
 
-const Config = require('./catalogo.json')
+const Config = {
+    "groups":[
+    {
+      "id": "sort",
+      "title": "Ordenar",
+      "default": "chrono",
+      "options": [
+        {
+          "label": "Agregados",
+          "value": "chrono",
+          "function": ["", "return false"]
+        },
+        {
+          "label": "A - Z",
+          "value": "a-z",
+          "function": ["first", "second", "return first.name.toLowerCase() > second.name.toLowerCase() ? 1 : -1"]
+        },
+        {
+          "label": "Z - A",
+          "value": "z-a",
+          "function": ["first", "second", "return first.name.toLowerCase() < second.name.toLowerCase() ? 1 : -1"]
+        },
+        {
+          "label": "Más caros",
+          "value": "price-ascending",
+          "function": ["first", "second", "return first.price < second.price? 1 : -1"]
+        },
+        {
+          "label": "Menos caros",
+          "value": "price-descending",
+          "function": ["first", "second", "return first.price > second.price ? 1 : -1"]
+        }
+      ]
+    },
+    {
+      "id": "filter",
+      "title": "Categorías",
+      "default": "all",
+      "options": [
+        {
+          "label": "Todas",
+          "value": "all",
+          "function": ["return true"]
+        },
+        {
+          "label": "Mangas",
+          "value": "manga",
+          "function": ["product", "return product.category.toLowerCase()===\"manga\""]
+        },
+        {
+          "label": "Ropa",
+          "value": "clothing",
+          "function": ["product", "return product.category.toLowerCase()===\"clothing\""]
+        },
+        {
+          "label": "Accesorios",
+          "value": "accesories",
+          "function": ["product", "return product.category.toLowerCase()===\"accesorios\""]
+        },
+        {
+          "label": "Otros",
+          "value": "other",
+          "function": ["product", "return product.category.toLowerCase()===\"other\""]
+        }
+      ]
+    }
+  ]
+}
 
 function FilterSection (props) {
     return (
@@ -78,16 +145,18 @@ function Product (props) {
     }
 
     let name = props.data.name
+    let id = `${props.data.series}-${`${props.data.volume}`.padStart(3, '0')}${props.data.language}`
     if(props.data.volume) {
         name += ` Vol. ${props.data.volume}`
+    } else {
+        id = `${props.data.series}-${props.data.language}`
     }
 
-    let id = `${props.data.series}-${`${props.data.volume}`.padStart(3, '0')}${props.data.language}`
     return (
-        <Link className={styles.product} href={`/catalogo/${id}`}>
-            <a><div className={imageWrapperClasses.join(' ')}>
+        <Link href={`/catalogo/${id}`}>
+            <a className={styles.product}><div className={imageWrapperClasses.join(' ')}>
                 <Image
-                    src={`/img/catalogo/${props.data.image}`} 
+                    src={`/img/catalogo/${props.data.image}`}
                     alt={name}
 
                     layout="fill"
@@ -95,7 +164,9 @@ function Product (props) {
                     objectPosition="center"
 
                     onLoadingComplete={() => {
-                        setIsLoading(false)
+                        setTimeout(() => {
+                            setIsLoading(false)
+                        }, 500);
                     }}
                 />
             </div>

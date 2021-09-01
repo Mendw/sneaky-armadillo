@@ -1,7 +1,3 @@
-import { getRange } from '../../lib/sheets'
-
-getRange()
-
 export default function handler(req, res) {
   res.status(200).json([
     {

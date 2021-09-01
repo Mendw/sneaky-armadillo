@@ -30,8 +30,6 @@
     margin-bottom: 10px;
     white-space: nowrap;
     font-family: 'Karla', sans-serif;
-
-    font-weight: 400;
 }
 
 .greeting_content > h1, .greeting_content > span {
@@ -252,4 +250,4 @@
     .catalogue:hover:active {
         border-style: inset;
     }
-  }
+}

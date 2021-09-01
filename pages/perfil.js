@@ -60,22 +60,24 @@ export default function Profile() {
                                 router.push(redirectURL)
                             }
                         }];
-                        return <div className={[styles.provider, styles[provider.name]].join(' ')} key={index}>
-                            <div className={styles.provider_logo_wrapper}>
-                                <div className={styles.provider_logo}>
-                                    <Image src={provider.logo} height={30} width={30} alt=""></Image>
+                        return (
+                            <div className={[styles.provider, styles[provider.name]].join(' ')} key={index}>
+                                <div className={styles.provider_logo_wrapper}>
+                                    <div className={styles.provider_logo}>
+                                        <Image src={provider.logo} height={30} width={30} alt=""></Image>
+                                    </div>
+                                    {capitalizeString(provider.name)}
                                 </div>
-                                {capitalizeString(provider.name)}
+                                <div className={styles.provider_action}>
+                                    <button className={[class_, styles.connect_button].join(' ')} disabled={!canClick} onClick={() => {
+                                        setCanClick(false)
+                                        func()
+                                    }}>
+                                        {text}
+                                    </button>
+                                </div>
                             </div>
-                            <div className={styles.provider_action}>
-                                <button className={[class_, styles.connect_button].join(' ')} onClick={() => {
-                                    setCanClick(false)
-                                    func()
-                                }}>
-                                    {text}
-                                </button>
-                            </div>
-                        </div>
+                        )
                     })}
                 </div>
                 </details>
