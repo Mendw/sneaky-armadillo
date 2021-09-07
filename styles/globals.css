@@ -7,7 +7,8 @@
   --app-width: 1200px;
 
   --matte-color-100: #ececec;
-  --matte-color-200: #c2c2c2;
+  --matte-color-150: #e6e6e6;
+  --matte-color-200: #d4d4d4;
   --matte-color-300: #9b9b9b;
   --matte-color-400: #4d4d4d;
   --matte-color-500: #262626;
@@ -38,10 +39,10 @@
   --warning-color-d : #FFB013;
   --warning-color-dd: #E19600;
 
-  --danger-color-l : #FF766B;
-  --danger-color   : #FF4C3E;
-  --danger-color-d : #F43223;
-  --danger-color-dd: #D21E10;
+  --danger-color-l : #EF5350;
+  --danger-color   : #F44336;
+  --danger-color-d : #E53935;
+  --danger-color-dd: #D32F2F;
 
   --primary-gradient: linear-gradient(
     0deg, 

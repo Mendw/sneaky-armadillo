@@ -91,8 +91,10 @@
 .information {
     --information-background: var(--matte-color-200);
 
-    background: url('../public/img/inicio/clouds.png'), var(--information-background);
-    background-size: 450px;
+    background: url('../public/img/inicio/clouds.png'), url('../public/img/inicio/stars.png'), var(--information-background);
+    animation: wind 120s linear infinite normal;
+
+    background-size: 900px, 450px;
     image-rendering: pixelated;
 
     flex: 3;
@@ -103,6 +105,15 @@
     justify-content: flex-end;
 }
 
+@keyframes wind {
+    0% {
+        background-position-x: 0px, 0px;
+    }
+
+    100% {
+        background-position-x: 900px, 0px;
+    }
+}
 .information_overlay {
     display: none;
 
