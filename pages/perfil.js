@@ -97,17 +97,17 @@ function AddressForm(props) {
             }
         }}>
             <div className={styles.form_input}>
-                <label for="form_name">Nombre<span className={styles.required_mark}>*</span></label>
+                <label htmlFor="form_name">Nombre<span className={styles.required_mark}>*</span></label>
                 <input type="text" name="name" placeholder="Nombre completo" required={true} id="form_name"/>
             </div>
             <div className={styles.form_input}>
-                <label for="form_address">Dirección<span className={styles.required_mark}>*</span></label>
+                <label htmlFor="form_address">Dirección<span className={styles.required_mark}>*</span></label>
                 <input type="text" name="address_1" placeholder="Línea 1" required={true} id="form_address"/>
                 <input type="text" name="address_2" placeholder="Línea 2 (Opcional)"/>
             </div>
             <div className={styles.form_group}>
                 <div className={styles.form_input}>
-                    <label for="form_state">Estado<span className={styles.required_mark}>*</span></label>
+                    <label htmlFor="form_state">Estado<span className={styles.required_mark}>*</span></label>
                     <select id="form_state" name="state" defaultValue="" required={true} onChange={(ev) => {
                         setSelectedState(ev.target.value)
                     }}>
@@ -120,7 +120,7 @@ function AddressForm(props) {
                     </select>
                 </div>
                 <div className={styles.form_input}>
-                    <label for="form_city">Ciudad<span className={styles.required_mark}>*</span></label>
+                    <label htmlFor="form_city">Ciudad<span className={styles.required_mark}>*</span></label>
                     <select id="form_city" name="city" defaultValue="" disabled={selectedState === undefined} required={true}>
                         <option disabled={true} value="">Seleccione una ciudad</option>
                         {
@@ -132,7 +132,7 @@ function AddressForm(props) {
                 </div>
             </div>
             <div className={styles.form_input}>
-                <label for="form_phone">Número de Teléfono</label>
+                <label htmlFor="form_phone">Número de Teléfono</label>
                 <input id="form_phone" type="text" placeholder="04120000000 (11 Números)" name="phone" required={true}/>
             </div>
             <div className={styles.form_actions}>
