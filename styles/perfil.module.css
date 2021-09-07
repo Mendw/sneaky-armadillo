@@ -88,7 +88,7 @@
     padding: 0px 10px;
     max-width: 450px;
 
-    margin: 0px auto 20px 0px;
+    margin: 0px auto 20px auto;
 }
 
 .address_form input, .address_form select {
