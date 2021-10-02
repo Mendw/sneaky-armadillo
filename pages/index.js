@@ -1,11 +1,44 @@
 import styles from '../styles/inicio.module.css'
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import Button from '../components/button'
 
 export default function Index (props) {    
+    let [ message, setMessage ] = useState(false)
+
+    let alt_news = <>
+        <div className={styles.update}>
+            <span>Un día como hoy, hace 2 años, empezamos una relación hermosa.</span>
+        </div>
+        <div className={styles.update}>
+            <span>Desde ese momento, cada día te amo más.</span>
+        </div>
+        <div className={styles.update}>
+            <span>Espero que la sorpresa te haya gustado, espero que te haga la vida más fácil.</span>
+        </div>
+        <div className={styles.update}>
+            <span>Espero que podamos continuar compartiendo momentos hermosos, importantes, significativos.</span>
+        </div>
+        <div className={styles.update}>
+            <span>Te amo mucho &lt;3</span>
+        </div>
+    </>
+
+    let news = <>
+        <div className={styles.update}>
+            <span>02/10/21 - A las 4:16 AM. Hora en la que terminé. Tengo mucho sueño.</span>
+        </div>
+        <div className={styles.update}>
+            <span>09/06/21 - Fecha en la que empecé a darle con ganas.</span>
+        </div>
+        <div className={styles.update}>
+            <span> - Involucré primero a Alex, luego a Ana y al final a Kayla.</span>
+        </div>
+    </>
+
     return (
-        <React.Fragment>
+        <>
             <div className={styles.index_wrapper}>
                 <div className={styles.greeting}>
                     <div className={styles.contact}>
@@ -46,12 +79,11 @@ export default function Index (props) {
                         <div className={styles.information_content}>
                             <div className={styles.updates}>
                                 <h1>Noticias</h1>
-                                <div className={styles.update}>
-                                    <span>Texto calientabanca. Acá van las noticias. Prueba prueba.</span>
-                                </div>
-                                <div className={styles.update}>
-                                    <span>30/06/21 - Sacamos nueva mercancía! Mentira esto tambien es una prueba.</span>
-                                </div>
+                                <Button className={styles.surprise} onClick={() => {
+                                    setMessage(!message)
+                                }}>Para Oliver 🎂</Button>
+                                {!message && news}
+                                {message && alt_news}
                             </div>
                             <div className={styles.information_separator}></div>
                             <div className={styles.payment_methods}>
@@ -83,6 +115,6 @@ export default function Index (props) {
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </>
     )
 }   
