@@ -143,7 +143,7 @@ function AddressForm(props) {
             <div className={styles.form_group}>
                     <div className={styles.form_input}>
                         <label htmlFor="form_company">Empresa de envíos</label>
-                        <select id="form_company" className={styles.address_form_input} name="company" defaultValue={address?.company} required={true}>
+                        <select id="form_company" className={styles.address_form_input} name="company" defaultValue={address?.company || ''} required={true}>
                             <option disabled={true} value="">Seleccione una empresa</option>
                             <option value="mrw">MRW</option>
                             <option value="zoom">ZOOM</option>
