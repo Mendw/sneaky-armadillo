@@ -5,38 +5,6 @@ import Image from 'next/image'
 import Button from '../components/button'
 
 export default function Index (props) {    
-    let [ message, setMessage ] = useState(false)
-
-    let alt_news = <>
-        <div className={styles.update}>
-            <span>Un día como hoy, hace 2 años, empezamos una relación hermosa.</span>
-        </div>
-        <div className={styles.update}>
-            <span>Desde ese momento, cada día te amo más.</span>
-        </div>
-        <div className={styles.update}>
-            <span>Espero que la sorpresa te haya gustado, espero que te haga la vida más fácil.</span>
-        </div>
-        <div className={styles.update}>
-            <span>Espero que podamos continuar compartiendo momentos hermosos, importantes, significativos.</span>
-        </div>
-        <div className={styles.update}>
-            <span>Te amo mucho &lt;3</span>
-        </div>
-    </>
-
-    let news = <>
-        <div className={styles.update}>
-            <span>02/10/21 - A las 4:16 AM. Hora en la que terminé. Tengo mucho sueño.</span>
-        </div>
-        <div className={styles.update}>
-            <span>09/06/21 - Fecha en la que empecé a darle con ganas.</span>
-        </div>
-        <div className={styles.update}>
-            <span> - Involucré primero a Alex, luego a Ana y al final a Kayla.</span>
-        </div>
-    </>
-
     return (
         <>
             <div className={styles.index_wrapper}>
@@ -62,7 +30,7 @@ export default function Index (props) {
                         </a>
                     </div>
                     <div className={styles.greeting_content}>
-                        <h1>Bienvenide a Hoshi</h1>
+                        <h1>Bienvenidos a Hoshi</h1>
                         <span>Somos una tienda en línea de Mangas, Ropa y Accesorios. Hacemos envíos a toda Venezuela.</span>
                         <div className={styles.greeting_actions}>
                             <Link href="/catalogo">
@@ -79,11 +47,15 @@ export default function Index (props) {
                         <div className={styles.information_content}>
                             <div className={styles.updates}>
                                 <h1>Noticias</h1>
-                                <Button className={styles.surprise} onClick={() => {
-                                    setMessage(!message)
-                                }}>Para Oliver 🎂</Button>
-                                {!message && news}
-                                {message && alt_news}
+                                <div className={styles.update}>
+                                    <span>02/10/21 - A las 4:16 AM. Hora en la que terminé. Tengo mucho sueño.</span>
+                                </div>
+                                <div className={styles.update}>
+                                    <span>09/06/21 - Fecha en la que empecé a darle con ganas.</span>
+                                </div>
+                                <div className={styles.update}>
+                                    <span> - Involucré primero a Alex, luego a Ana y al final a Kayla.</span>
+                                </div>
                             </div>
                             <div className={styles.information_separator}></div>
                             <div className={styles.payment_methods}>
