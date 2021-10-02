@@ -1,15 +1,29 @@
 import { basepath } from "../../lib/utils";
 import styles from '../../styles/producto.module.css';
 import Image from 'next/image'
-import Spinner from "../../components/spinner";
-import { useState } from "react";
+import Button from '../../components/button'
+import { useEffect, useState } from "react";
+import useUser from "../../lib/useUser";
+import { useRouter } from "next/router";
 
 function Cart (props) {
-  let [ammount, mutateAmmount] = useState(0)
+  let { user, mutateUser } = useUser()
+  let router = useRouter()
+  let [isFetching, setIsFetching] = useState(false)
+
+  let userLoaded = user && 'isLoggedIn' in user
+  let isLoggedIn = userLoaded && user.isLoggedIn
 
   let {
     precio,
+    productId
   } = props
+  
+  let [ammount, mutateAmmount] = useState(0)
+
+  useEffect(() => {
+    mutateAmmount(isLoggedIn && user.profile.cart ? (user.profile.cart[productId]) || 0 : 0)
+  }, [user])
 
   return (
     <div className={styles.cart}>
@@ -20,17 +34,19 @@ function Cart (props) {
         )}`}
       </span>
       <div className={styles.cart_controls}>
-        <button
+        <Button
+          disabled={isFetching || !userLoaded}
           onClick={() => {
             mutateAmmount(Math.max(ammount - 1, 0))
           }}
-        >-</button>
-        <span>{ammount}</span>
-        <button
+        >-</Button>
+        <span>{userLoaded ? ammount : "~"}</span>
+        <Button
+          disabled={isFetching || !userLoaded}
           onClick={() => {
             mutateAmmount(Math.min(ammount + 1, 10))
           }}
-        >+</button>
+        >+</Button>
       </div>
       <span>
         {`$${(ammount * precio).toLocaleString(
@@ -38,15 +54,39 @@ function Cart (props) {
           { minimumFractionDigits: 2 }
         )} total`}
       </span>
-      <button className={styles.cart_button}>
+      <Button disabled={isFetching || !userLoaded} className={styles.cart_button} onClick={async () => {
+        if(isLoggedIn) {
+          setIsFetching(true)
+          let payload = {
+            productId,
+            ammount
+          }
+
+          let updatedUser = await fetch('/api/update-cart', {
+            method: "POST",
+            body: JSON.stringify(payload),
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          }).then(res => res.json())
+
+          if(!('error' in updatedUser)) {
+            mutateUser(updatedUser, true)
+          }
+
+          setIsFetching(false)
+        } else {
+          router.push('/ingreso')
+        }
+      }}>
         Agregar al Carrito
-      </button>
+      </Button>
     </div>
   )
 }
 
 export default function Product(props) {
-  let { product } = props
+  let { product, id } = props
 
   return (
     <div className={styles.product_wrapper}>
@@ -70,7 +110,7 @@ export default function Product(props) {
               })
             }
           </div>
-          <Cart precio={product.price}/>
+          <Cart precio={product.price} productId={id}/>
         </div>
       </div>
     </div>
@@ -82,7 +122,7 @@ export async function getStaticProps(context) {
   const product = await fetch(`${basepath}/api/products/${id}`).then(res => res.json())
 
   return {
-    props: { product },
+    props: { product, id },
     revalidate: 3600
   }
 }

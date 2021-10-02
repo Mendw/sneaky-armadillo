@@ -30,7 +30,7 @@ export default function Index (props) {
                     </div>
                     <div className={styles.greeting_content}>
                         <h1>Bienvenide a Hoshi</h1>
-                        <span>Somos una tienda en línea de Mangas, Cómics, Ropa y Accesorios.</span>
+                        <span>Somos una tienda en línea de Mangas, Ropa y Accesorios. Hacemos envíos a toda Venezuela.</span>
                         <div className={styles.greeting_actions}>
                             <Link href="/catalogo">
                               <a className={styles.catalogue}>

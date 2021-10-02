@@ -1,0 +1,37 @@
+.button_base {
+    --hover-fgc: var(--matte-color-100);
+    --hover-bgc: var(--matte-color-400);
+    --hover-bdc: var(--matte-color-400);
+
+    transition-property: background-color, border-color, color;
+    transition-duration: 50ms;
+
+    padding: 8px 12px;
+    cursor: pointer;
+
+    background-color: var(--matte-color-500);
+
+    border: 2px solid transparent;
+    border-radius: 5px;
+    color: var(--matte-color-200);
+}
+
+.button_base:disabled:disabled {
+    background-color: var(--matte-color-200);
+    color: var(--matte-color-300);
+    cursor: default;
+
+    border: 2px solid transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .button_base:hover.button_base:hover:not(:disabled) {
+        background-color: var(--hover-bgc);
+        border: 2px outset var(--hover-bdc);
+        color: var(--hover-fgc)
+    }
+
+    .button_base:hover:active {
+        border-style: inset;
+    }
+}

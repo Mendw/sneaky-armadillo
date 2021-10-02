@@ -1,3 +1,5 @@
+import { getProducts } from '../../../lib/fauna'
+
 export default function handler(req, res) {
   res.status(200).json([
     {

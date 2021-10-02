@@ -31,8 +31,6 @@ export default withUserSession(async (req, res) => {
         let { id } = await fetch(`https://graph.facebook.com/me?access_token=${response.access_token}`).then(res => res.json())
         let token = randomBytes(16).toString('hex')
 
-        console.log(id)
-
         req.session.set('authentication-data', {
             token: token,
             client_id: id,

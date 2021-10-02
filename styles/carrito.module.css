@@ -1,0 +1,87 @@
+.cart_wrapper {
+    flex: 1;
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+}
+
+.cart {
+    margin: 60px 10px;
+    flex: 0 1 var(--app-width);
+
+    overflow: scroll;
+}
+
+.cart_content {
+
+    display: grid;
+    grid-template-rows: min-content min-content;
+    grid-template-columns: 1fr;
+
+    justify-items: center;
+
+    row-gap: 20px;
+    overflow: scroll;
+}
+
+.cart_products {
+    border-collapse: collapse;
+}
+
+.cart_products > tbody {
+    border-bottom: 1px solid black;
+}
+
+.cart_products th {
+    border-bottom: 1px solid var(--matte-color-500);
+}
+
+.cart_products td, .cart_products th {
+    padding: 10px;
+    text-align: center;
+}
+
+.product_image {
+    min-width: 110px;
+}
+
+.product_name {
+    width: 200px;
+}
+
+.product_edit.product_edit, .product_delete.product_delete {
+    padding: 5px;
+    display: flex;
+}
+
+.product_delete.product_delete {
+    background-color: var(--danger-color);
+    --hover-bgc: var(--danger-color-d);
+    --hover-bdc: var(--danger-color-d);
+}
+
+.product_actions_wrapper.product_actions_wrapper {
+    padding-left: 20px;
+}
+
+.product_actions {
+    display: grid;
+    grid-auto-flow: column;
+
+    justify-content: center;
+
+    column-gap: 5px;
+}
+
+.buy_button_wrapper.buy_button_wrapper {
+    padding-left: 20px;
+}
+
+.buy_button {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+}

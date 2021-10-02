@@ -40,17 +40,6 @@
     text-align: center;
 }
 
-.logout {
-    background-color: var(--matte-color-500);
-    color: var(--matte-color-200);
-    cursor: pointer;
-
-    padding: 12px;
-
-    border: none;
-    border-radius: 5px;
-}
-
 .spinner {
     align-self: center;
 }
@@ -62,23 +51,102 @@
 
 .address {
     display: grid;
+    grid-template-columns: auto 40px;
     place-content: center;
+    place-items: center;
 
-    row-gap: 10px;
+    column-gap: 15px;
+
     padding: 10px 10px 20px 10px;
 }
 
-.address_edit_button {
-    justify-self: center;
+.no_address {
+    padding-top: 15px;
 
-    width: 100px;
-    height: 35px;
+    display: grid;
+    grid-column: span 2;
 
-    background-color: var(--matte-color-500);
-    color: var(--matte-color-200);
+    grid-auto-flow: row;
+    place-items: center;
 
-    border: none;
-    border-radius: 4px;
+    row-gap: 10px;
+}
+
+.address_info {
+    display: grid;
+    grid-auto-flow: row;
+
+    row-gap: 5px;
+}
+
+.address_actions {
+    display: grid;
+    row-gap: 5px;
+}
+
+.address_edit_button.address_edit_button {
+    padding: 5px;
+    display: flex;
+}
+
+.address_delete_button.address_delete_button {
+    padding: 5px;
+    width: 40px;
+
+    display: flex;
+
+    background-color: var(--danger-color);
+    --hover-bgc: var(--danger-color-d);
+    --hover-bdc: var(--danger-color-d);
+}
+
+.addressTypeSelect_wrapper {
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px 0px 40px 0px;
+}
+
+.addressTypeSelect_title {
+    text-align: center;
+    font-size: 1.2rem;
+
+    margin-bottom: 15px;
+}
+
+.addressTypeSelect {
+    display: flex;
+    flex-flow: row wrap;
+
+    justify-content: center;
+
+    gap: 15px;
+    padding: 0px 10px;
+
+    margin-bottom: 20px;
+}
+
+.addressOption {
+    flex: 1 0 200px;
+    max-width: 250px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+}
+
+.addressOption > h3 {
+    text-align: center;
+}
+
+.addressOption > button {
+    margin-top: 20px;
+    align-self: center;
+}
+
+.cancel_button {
+    align-self: center;
 }
 
 .address_form {
@@ -91,9 +159,16 @@
     margin: 0px auto 20px auto;
 }
 
-.address_form input, .address_form select {
+.address_form > p {
+    margin-bottom: 10px;
+    color: var(--matte-color-400);
+}
+
+.address_form_input, .address_form_select {
     padding: 6px 10px;
     border-radius: 3px;
+
+    min-width: 0px;
 
     border: 1px solid var(--matte-color-300);
     outline-color: var(--primary-color);
@@ -126,12 +201,7 @@
     column-gap: 10px;
 }
 
-.submit_button {
-    background-color: var(--matte-color-500);
-    color: var(--matte-color-200);
-
-    width: 100%;
-    max-width: 200px;
+.submit_button.submit_button {
     justify-self: end;
 }
 
@@ -194,26 +264,20 @@
     background-color: white;
 }
 
-.connect_button {
-    padding: 6px 9px;
-    width: 96px;
-    
-    border-radius: 5px;
-    border: 1px solid var(--matte-color-200);
-    cursor: pointer;
-}
-
-.connect_button:disabled {
-    background-color: var(--matte-color-200);
-    color: var(--matte-color-300);
-}
-
-.connected {
+.connected.connected {
     background-color: var(--danger-color);
     color: var(--matte-color-100);
+
+    --hover-fgc: var(--matte-color-100);
+    --hover-bgc: var(--danger-color-d);
+    --hover-bdc: var(--danger-color);
 }
 
-.not_connected {
+.not_connected.not_connected {
     background-color: var(--positive-color);
     color: var(--matte-color-600);
+
+    --hover-fgc: var(--matte-color-600);
+    --hover-bgc: var(--positive-color-d);
+    --hover-bdc: var(--positive-color);
 }

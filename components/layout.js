@@ -3,18 +3,23 @@ import Link from 'next/link';
 
 import styles from '../styles/layout.module.css'
 import useUser from '../lib/useUser'
-import useSWR from 'swr';
 
 export default function Layout({ children }) {
     let { user } = useUser()
-    let { data: carrito } = useSWR('/api/cart')
-
     let userLoaded = user && 'isLoggedIn' in user
+
+    let cartAmmount = 0
+    if(userLoaded && user.isLoggedIn === true && user.profile && 'cart' in user.profile) {
+        for(const productId in user.profile.cart) {
+            cartAmmount += user.profile.cart[productId]
+        }
+    }
+
     let innerProfileLink = <a>
-            <div className={styles.login_link}>
-                <span className={styles.login_link_letter}>{userLoaded ? user.isLoggedIn ? user.profile.name[0].toUpperCase() : '>' : '~'}</span>
-            </div>
-        </a>
+        <div className={styles.login_link}>
+            <span className={styles.login_link_letter}>{userLoaded ? user.isLoggedIn ? user.profile.name[0].toUpperCase() : '>' : '~'}</span>
+        </div>
+    </a>
 
     return (
         <>
@@ -38,8 +43,7 @@ export default function Layout({ children }) {
                             <div className={styles.header_bottom_wrapper}>
                                 <span className={styles.header_bottom_separator}></span>
                                 <NavLink href="/catalogo" className={styles.header_bottom_link} activeClassName={styles.active}>CATÁLOGO</NavLink>
-                                <NavLink href="/pedidos" className={styles.header_bottom_link} activeClassName={styles.active}>PEDIDOS</NavLink>
-                                <NavLink href="/carrito" className={styles.header_bottom_link} activeClassName={styles.active}>CARRITO ({carrito ? carrito.items.length : 0})</NavLink>
+                                <NavLink href="/carrito" className={styles.header_bottom_link} activeClassName={styles.active}>CARRITO ({cartAmmount})</NavLink> {/** userHasCart ? user.profile.cart.items.length :  */}
                                 <span className={styles.header_bottom_separator}></span>
                             </div>
                         </div>
