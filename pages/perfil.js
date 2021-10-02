@@ -240,10 +240,10 @@ function DisplayAddress(props) {
                 </div>
                 <div className={styles.address_actions}>
                     <Button disabled={!canClick} className={styles.address_edit_button} onClick={props.editAddress}>
-                        <Image src={editIcon} width={25} height={25}/>
+                        <Image src={editIcon} width={25} height={25} alt=""/>
                     </Button>
                     <Button disabled={!canClick} className={styles.address_delete_button} onClick={props.deleteAddress}>
-                        <Image src={deleteIcon} width={25} height={25}/>
+                        <Image src={deleteIcon} width={25} height={25} alt=""/>
                     </Button>
                 </div>
             </div>

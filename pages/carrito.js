@@ -19,6 +19,8 @@ function CartProduct({data, editProduct, deleteProduct}) {
                     width={90}
                     height={90}
 
+                    alt={product.name}
+
                     objectFit="cover"
                     objectPosition="center"         
                 />
@@ -44,10 +46,10 @@ function CartProduct({data, editProduct, deleteProduct}) {
             <td className={styles.product_actions_wrapper}>
                 <div className={styles.product_actions}>
                     <Button className={styles.product_edit} onClick={editProduct}>
-                        <Image src={editIcon} width={15} height={15}/>
+                        <Image src={editIcon} width={15} height={15} alt=""/>
                     </Button>
                     <Button className={styles.product_delete}>
-                        <Image src={deleteIcon} width={15} height={15} onClick={deleteProduct}/>
+                        <Image src={deleteIcon} width={15} height={15} onClick={deleteProduct} alt=""/>
                     </Button>
                 </div>
             </td>
@@ -132,7 +134,7 @@ export default function Cart() {
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan={4}>{' '}</td>
+                                <td colSpan={4}>{' '}</td>
                                 <td>Total</td>
                                 <td>{`$${totalize(detailedCart).toLocaleString(
                                     undefined,

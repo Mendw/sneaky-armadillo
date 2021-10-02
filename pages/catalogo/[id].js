@@ -12,9 +12,9 @@ function Cart (props) {
   let [isFetching, setIsFetching] = useState(false)
 
   let userLoaded = user && 'isLoggedIn' in user
-  let isLoggedIn = userLoaded && user.isLoggedIn
+  const isLoggedIn = userLoaded && user.isLoggedIn
 
-  let {
+  const {
     precio,
     productId
   } = props
