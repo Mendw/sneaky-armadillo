@@ -128,21 +128,21 @@ function AddressForm(props) {
             updateAddress(data)
         }}>
             <input type="hidden" name="type" value={addressType}/>
+            <div className={styles.form_input}>
+                <label htmlFor="form_name">Nombre</label>
+                <input className={styles.address_form_input} defaultValue={address?.name || ''} type="text" name="name" placeholder='Nombre completo' required={true} id="form_name"/>
+            </div>
             {
                 addressType === 'local' ? <>
                 <div className={styles.form_input}>
-                    <label htmlFor="form_name">{addressType === 'local' ? 'Nombre' : 'Empresa y Código'}<span className={styles.required_mark}>*</span></label>
-                    <input className={styles.address_form_input} defaultValue={address?.name || ''} type="text" name="name" placeholder={addressType === 'local'? 'Nombre completo' : 'Zoom 1234'} required={true} id="form_name"/>
-                </div>
-                <div className={styles.form_input}>
-                    <label htmlFor="form_address">Dirección<span className={styles.required_mark}>*</span></label>
+                    <label htmlFor="form_address">Dirección</label>
                     <input className={styles.address_form_input} defaultValue={address?.address_1 || ''} type="text" name="address_1" placeholder="Línea 1" required={true} minLength={5} id="form_address"/>
                     <input className={styles.address_form_input} defaultValue={address?.address_2 || ''} type="text" name="address_2" placeholder="Línea 2 (Opcional)"/>
                 </div>
             </> : <>
             <div className={styles.form_group}>
                     <div className={styles.form_input}>
-                        <label htmlFor="form_company">Empresa de envíos<span className={styles.required_mark}>*</span></label>
+                        <label htmlFor="form_company">Empresa de envíos</label>
                         <select id="form_company" className={styles.address_form_input} name="company" defaultValue={address?.company} required={true}>
                             <option disabled={true} value="">Seleccione una empresa</option>
                             <option value="mrw">MRW</option>
@@ -151,13 +151,13 @@ function AddressForm(props) {
                         </select>
                     </div>
                     <div className={styles.form_input}>
-                        <label htmlFor="form_company_code">Código<span className={styles.required_mark}>*</span></label>
+                        <label htmlFor="form_company_code">Código</label>
                         <input id="form_company_code" className={styles.address_form_input} defaultValue={address?.company_code || ''} type="text" name="company_code" required={true} />
                     </div>
                 </div>
                 <div className={styles.form_group}>
                     <div className={styles.form_input}>
-                        <label htmlFor="form_state">Estado<span className={styles.required_mark}>*</span></label>
+                        <label htmlFor="form_state">Estado</label>
                         <select id="form_state" className={styles.address_form_input} name="state" value={selectedState} required={true} onChange={(ev) => {
                             setSelectedState(ev.target.value)
                             document.getElementById('form_city').value = ""
@@ -171,7 +171,7 @@ function AddressForm(props) {
                         </select>
                     </div>
                     <div className={styles.form_input}>
-                        <label htmlFor="form_city">Ciudad<span className={styles.required_mark}>*</span></label>
+                        <label htmlFor="form_city">Ciudad</label>
                         <select id="form_city" className={styles.address_form_input} defaultValue={address?.city || ''} name="city" required={true}>
                             <option disabled={true} value="">Seleccione una ciudad</option>
                             {
@@ -184,13 +184,19 @@ function AddressForm(props) {
                 </div>
             </>
             }
+            {
+                addressType === 'national' && <div className={styles.form_input}>
+                    <label htmlFor="form_nid">Número de Cédula</label>
+                    <input defaultValue={address?.nid || ''} className={styles.address_form_input} type="text" name="nid" placeholder="Número de cédula" required={true} id="form_id"/>
+                </div>
+            }
             <div className={styles.form_input}>
-                <label htmlFor="form_phone">Número de Teléfono</label>
+                <label htmlFor="form_phone">Número de Teléfono<span className={styles.optional_mark}>(Opcional)</span></label>
                 <input 
                     id="form_phone" 
                     type="text"
                     defaultValue={address?.phone || ''}
-                    placeholder="11 Números (Opcional)" 
+                    placeholder="11 Números" 
                     name="phone"
                     pattern="[0-9]{11}"
                     className={styles.address_form_input}
@@ -205,12 +211,6 @@ function AddressForm(props) {
                         }
                     }}/>
             </div>
-            {
-                addressType === 'national' && <div className={styles.form_input}>
-                    <label htmlFor="form_nid">Número de Cédula<span className={styles.required_mark}>*</span></label>
-                    <input defaultValue={address?.nid || ''} className={styles.address_form_input} type="text" name="nid" placeholder="Número de cédula" required={true} id="form_id"/>
-                </div>
-            }
             <div className={styles.form_actions}>
                 <Button onClick={props.cancel}>Cancelar</Button>
                 <input type="submit" value="Guardar" className={[buttonStyles.button_base, styles.submit_button].join(' ')}/>
@@ -227,12 +227,14 @@ function DisplayAddress(props) {
         return (
             <div className={styles.address}>
                 <div className={styles.address_info}>
+                    {console.log(address)}
+                    <span className={styles.address_name}>{address.name}</span>
                     {
                         address.type === 'local' ? <>
-                            <span>{address.name}</span>
                             <span>{`${address.address_1} ${address.address_2??``}`.trim()}</span>
                         </> : <>
                             <span>{`${address.company.toUpperCase()} ${address.company_code}`}</span>
+                            <span>{`${address.city}, ${address.state}`}</span>
                         </>
                     }
                     { address.phone && <span>{address.phone}</span> }

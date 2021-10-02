@@ -174,8 +174,13 @@
     outline-color: var(--primary-color);
 }
 
-.required_mark {
-    color: var(--danger-color);
+.optional_mark {
+    color: var(--matte-color-300);
+    margin-left: 5px;
+}
+
+.address_name {
+    font-size: larger;
 }
 
 .form_input {
