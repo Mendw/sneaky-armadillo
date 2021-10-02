@@ -23,7 +23,7 @@ function Cart (props) {
 
   useEffect(() => {
     mutateAmmount(isLoggedIn && user.profile.cart ? (user.profile.cart[productId]) || 0 : 0)
-  }, [user])
+  }, [user, isLoggedIn, productId])
 
   return (
     <div className={styles.cart}>

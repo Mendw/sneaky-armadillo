@@ -19,7 +19,7 @@ function CartProduct({data, editProduct, deleteProduct}) {
                     width={90}
                     height={90}
 
-                    alt={product.name}
+                    alt={data.name}
 
                     objectFit="cover"
                     objectPosition="center"         
@@ -45,11 +45,11 @@ function CartProduct({data, editProduct, deleteProduct}) {
             </td>
             <td className={styles.product_actions_wrapper}>
                 <div className={styles.product_actions}>
-                    <Button className={styles.product_edit} onClick={editProduct}>
+                    <Button className={styles.product_edit} onClick={() => editProduct()}>
                         <Image src={editIcon} width={15} height={15} alt=""/>
                     </Button>
                     <Button className={styles.product_delete}>
-                        <Image src={deleteIcon} width={15} height={15} onClick={deleteProduct} alt=""/>
+                        <Image src={deleteIcon} width={15} height={15} onClick={() => deleteProduct()} alt=""/>
                     </Button>
                 </div>
             </td>
@@ -107,8 +107,6 @@ export default function Cart() {
                                 (element, index) => <CartProduct key={index} data={element} editProduct={() => {
                                     router.push(`/catalogo/${buildId(element)}`)
                                 }} deleteProduct={() => {
-                                    alert("doing it")
-
                                     let payload = {
                                         productId: buildId(element),
                                         ammount: null
