@@ -2,31 +2,46 @@ import styles from '../styles/inicio.module.css'
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import Button from '../components/button'
+
+import hoshiLogo from '../public/logo.webp'
+import tiktokLogo from '../public/img/inicio/tiktok.webp'
+import instagramLogo from '../public/img/inicio/instagram.webp'
+import whatsappLogo from '../public/img/inicio/whatsapp.webp'
 
 export default function Index (props) {    
     return (
         <>
             <div className={styles.index_wrapper}>
                 <div className={styles.greeting}>
+                    <div className={styles.hoshi_logo_wrapper}>
+                        <Image 
+                            src={hoshiLogo}
+                            className={styles.hoshi_logo}
+
+                            width={220}
+                            height={220}
+
+                            alt=''
+                        />
+                    </div>
                     <div className={styles.contact}>
                         <a 
                             href="https://www.instagram.com/hoshimangas.ve/"
                             target="_blank"
                             rel="noreferrer">
-                            <Image width={35} height={35} src="/img/inicio/instagram.webp" alt="Instagram Logo"/>
+                            <Image width={35} height={35} src={instagramLogo} alt="Instagram Logo"/>
                         </a>
                         <a 
                             href="https://vm.tiktok.com/ZMdW7b4DE/"
                             target="_blank"
                             rel="noreferrer">
-                            <Image width={35} height={35} src="/img/inicio/tiktok.webp" alt="TikTok Logo"/>
+                            <Image width={35} height={35} src={tiktokLogo} alt="TikTok Logo"/>
                         </a>
                         <a 
                             href="https://wa.me/584126952570"
                             target="_blank"
                             rel="noreferrer">
-                            <Image width={35} height={35} src="/img/inicio/whatsapp.webp" alt="Whatsapp Logo"/>
+                            <Image width={35} height={35} src={whatsappLogo} alt="Whatsapp Logo"/>
                         </a>
                     </div>
                     <div className={styles.greeting_content}>
@@ -48,13 +63,13 @@ export default function Index (props) {
                             <div className={styles.updates}>
                                 <h1>Noticias</h1>
                                 <div className={styles.update}>
-                                    <span>02/10/21 - A las 4:16 AM. Hora en la que terminé. Tengo mucho sueño.</span>
+                                    <span>Preventa de Tokyo Revengers Vol. 1 en Español: Comienza el 10 de Octubre.</span>
                                 </div>
                                 <div className={styles.update}>
-                                    <span>09/06/21 - Fecha en la que empecé a darle con ganas.</span>
+                                    <span>¡Death Note Vol. 1 y 2 en disponibilidad inmediata!</span>
                                 </div>
                                 <div className={styles.update}>
-                                    <span> - Involucré primero a Alex, luego a Ana y al final a Kayla.</span>
+                                    <span>Pronto a la venta: todos los volúmenes de Chainsaw Man</span>
                                 </div>
                             </div>
                             <div className={styles.information_separator}></div>
